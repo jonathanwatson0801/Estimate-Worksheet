@@ -1,0 +1,67 @@
+/* styles.css */
+
+/* ==================== TAILWIND BASE ==================== */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ==================== CUSTOM STYLES ==================== */
+
+/* Table inputs */
+.table-input {
+    width: 100%;
+    background: transparent;
+    text-align: center;
+    border-radius: 0.75rem;
+    padding: 12px 8px;
+    transition: all 0.2s;
+}
+
+.table-input:focus {
+    background-color: white;
+    color: #111827;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.3);
+    outline: none;
+}
+
+/* Delete buttons - Big, red, always visible */
+.delete-btn {
+    color: #ef4444;
+    font-size: 1.25rem;
+    line-height: 1;
+    font-weight: 300;
+    padding: 4px 12px;
+    border-radius: 9999px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    background: none;
+    border: none;
+}
+
+.delete-btn:hover {
+    color: #b91c1c;
+    transform: scale(1.25);
+}
+
+/* Row hover */
+.group:hover {
+    background-color: #f0fdf4 !important;
+}
+
+/* Hide markup scenarios when printing */
+@media print {
+    #markup-scenarios-table {
+        display: none !important;
+    }
+    
+    /* Optional: Improve print layout */
+    body {
+        background: white !important;
+    }
+    
+    .bg-gradient-to-br {
+        background: white !important;
+        color: black !important;
+        box-shadow: none !important;
+    }
+}
