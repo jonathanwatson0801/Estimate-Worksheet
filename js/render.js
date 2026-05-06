@@ -111,6 +111,45 @@ function renderFuel() {
     document.getElementById("fuel-total").textContent = formatCurrency(calculateFuelTotal());
 }
 
+function renderRental() {
+    const tbody = document.getElementById("rental-body");
+    if (!tbody) return;
+
+    tbody.innerHTML = "";
+    estimate.rentalEquip.forEach((row, index) => {
+        const total = (row.rentLength || 0) * (row.rentCost || 0);
+
+        const tr = document.createElement("tr");
+        tr.className = "group hover:bg-emerald-50 transition-colors";
+        tr.innerHTML = `
+            <td class="pl-8 py-4">
+                <input type="text" value="${row.description || ''}" 
+                       class="table-input text-left" 
+                       onchange="updateRental(${index}, 'description', this.value)">
+            </td>
+            <td class="text-center py-4">
+                <input type="number" value="${row.rentLength || 0}" min="0" step="0.1" 
+                       class="table-input w-28" 
+                       onchange="updateRental(${index}, 'rentLength', parseFloat(this.value) || 0)">
+            </td>
+            <td class="text-center py-4">
+                <input type="number" value="${row.rentCost || 0}" min="0" step="0.01" 
+                       class="table-input w-32" 
+                       onchange="updateRental(${index}, 'rentCost', parseFloat(this.value) || 0)">
+            </td>
+            <td class="text-right pr-8 py-4 font-semibold">${formatCurrency(total)}</td>
+            <td class="pr-4">
+                <button onclick="deleteRentalRow(${index})" 
+                        class="delete-btn opacity-0 group-hover:opacity-100 text-xl">×</button>
+            </td>
+        `;
+        tbody.appendChild(tr);
+    });
+
+    // Update total
+    document.getElementById("rental-total").textContent = formatCurrency(calculateRentalTotal());
+}
+
 function renderLabor(bodyId, laborArray, updateFnName, deleteFnName, subtotalId, markupInputId, withMarkupId, markupPercent, sectionKey) {
     const tbody = document.getElementById(bodyId);
     if (!tbody) return;

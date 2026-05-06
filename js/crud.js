@@ -50,6 +50,7 @@ window.addPaintLaborRow = function() {
 
 // ==================== UPDATE & DELETE ====================
 
+// Shop and Field Labor
 window.updateShopLabor = function(index, field, value) {
     estimate.shopLabor[index][field] = value;
     calculateAll();
@@ -67,7 +68,14 @@ window.deleteFieldLaborRow = function(index) {
     estimate.fieldLabor.splice(index, 1);
     calculateAll();
 };
+window.addShopLaborRow = function() { estimate.shopLabor.push({ id: generateId(), description: "", guys: 1, days: 1, rate: 360 }); calculateAll(); };
+window.updateShopLabor = function(index, field, value) { estimate.shopLabor[index][field] = value; calculateAll(); };
+window.deleteShopLaborRow = function(index) { estimate.shopLabor.splice(index, 1); calculateAll(); };
+window.addFieldLaborRow = function() { estimate.fieldLabor.push({ id: generateId(), description: "", guys: 1, days: 1, rate: 360 }); calculateAll(); };
+window.updateFieldLabor = function(index, field, value) { estimate.fieldLabor[index][field] = value; calculateAll(); };
+window.deleteFieldLaborRow = function(index) { estimate.fieldLabor.splice(index, 1); calculateAll(); };
 
+// Paint Labor
 window.updatePaintLabor = function(index, field, value) {
     estimate.paintLabor[index][field] = value;
     calculateAll();
@@ -76,26 +84,34 @@ window.deletePaintLaborRow = function(index) {
     estimate.paintLabor.splice(index, 1);
     calculateAll();
 };
+window.addPaintLaborRow = function() { estimate.paintLabor.push({ id: generateId(), description: "", guys: 1, days: 1, rate: 360 }); renderPaintLabor(); calculateAll(); };
+window.updatePaintLabor = function(index, field, value) { estimate.paintLabor[index][field] = value; calculateAll(); };
+window.deletePaintLaborRow = function(index) { estimate.paintLabor.splice(index, 1); calculateAll(); };
 
+
+
+// Materials
 window.updateMaterial = function(index, field, value) { estimate.materials[index][field] = value; calculateAll(); };
 window.deleteMaterialRow = function(index) { estimate.materials.splice(index, 1); calculateAll(); };
 window.addMaterialRow = function() {
     estimate.materials.push({ id: generateId(), description: "", vendor: "", qty: 0, unitCost: 0 });
     renderMaterials(); calculateAll();
 };
+window.updateMaterialMarkup = function() { estimate.materialMarkupPercent = parseFloat(document.getElementById("material-markup-input").value) || 0; calculateAll(); };
+window.updateShopMarkup = function() { estimate.shopLaborMarkupPercent = parseFloat(document.getElementById("shop-markup-input").value) || 0; calculateAll(); };
+window.updateFieldMarkup = function() { estimate.fieldLaborMarkupPercent = parseFloat(document.getElementById("field-markup-input").value) || 0; calculateAll(); };
 
+// Consumables
 window.addConsumableRow = function() { estimate.consumables.push({ id: generateId(), description: "", qty: 0, unitCost: 0 }); renderConsumables(); calculateAll(); };
 window.updateConsumable = function(index, field, value) { estimate.consumables[index][field] = value; calculateAll(); };
 window.deleteConsumableRow = function(index) { estimate.consumables.splice(index, 1); calculateAll(); };
 
+// Paint Supplies
 window.addPaintSupplyRow = function() { estimate.paintSupplies.push({ id: generateId(), description: "", qty: 0, unitCost: 0 }); renderPaintSupplies(); calculateAll(); };
 window.updatePaintSupply = function(index, field, value) { estimate.paintSupplies[index][field] = value; calculateAll(); };
 window.deletePaintSupply = function(index) { estimate.paintSupplies.splice(index, 1); calculateAll(); };
 
-window.addPaintLaborRow = function() { estimate.paintLabor.push({ id: generateId(), description: "", guys: 1, days: 1, rate: 360 }); renderPaintLabor(); calculateAll(); };
-window.updatePaintLabor = function(index, field, value) { estimate.paintLabor[index][field] = value; calculateAll(); };
-window.deletePaintLaborRow = function(index) { estimate.paintLabor.splice(index, 1); calculateAll(); };
-
+// Fuel
 window.addFuelRow = function() {
     estimate.fuel.push({ id: generateId(), description: "Fuel Fill", tankFills: 1, costPerFill: 35 });
     renderFuel(); calculateAll();
@@ -103,23 +119,27 @@ window.addFuelRow = function() {
 window.updateFuel = function(index, field, value) { estimate.fuel[index][field] = value; calculateAll(); };
 window.deleteFuelRow = function(index) { estimate.fuel.splice(index, 1); calculateAll(); };
 
-window.updateMaterialMarkup = function() { estimate.materialMarkupPercent = parseFloat(document.getElementById("material-markup-input").value) || 0; calculateAll(); };
-window.updateShopMarkup = function() { estimate.shopLaborMarkupPercent = parseFloat(document.getElementById("shop-markup-input").value) || 0; calculateAll(); };
-window.updateFieldMarkup = function() { estimate.fieldLaborMarkupPercent = parseFloat(document.getElementById("field-markup-input").value) || 0; calculateAll(); };
+// Rentals
+window.addRentalRow = function() {
+    estimate.rentalEquip.push({
+        id: generateId(),
+        description: "Rental Equipment",
+        rentLength: 1,
+        rentCost: 35
+    });
+    renderRental();
+    calculateAll();
+};
+window.updateRental = function(index, field, value) { estimate.rentalEquip[index][field] = value; calculateAll(); };
+window.deleteRentalRow = function(index) { estimate.rentalEquip.splice(index, 1); calculateAll(); };
 
-window.addShopLaborRow = function() { estimate.shopLabor.push({ id: generateId(), description: "", guys: 1, days: 1, rate: 360 }); calculateAll(); };
-window.updateShopLabor = function(index, field, value) { estimate.shopLabor[index][field] = value; calculateAll(); };
-window.deleteShopLaborRow = function(index) { estimate.shopLabor.splice(index, 1); calculateAll(); };
-
-window.addFieldLaborRow = function() { estimate.fieldLabor.push({ id: generateId(), description: "", guys: 1, days: 1, rate: 360 }); calculateAll(); };
-window.updateFieldLabor = function(index, field, value) { estimate.fieldLabor[index][field] = value; calculateAll(); };
-window.deleteFieldLaborRow = function(index) { estimate.fieldLabor.splice(index, 1); calculateAll(); };
-
+// Other Costs
 window.updateOtherCost = function(key, value) {
     estimate.otherCosts[key] = value;
     calculateAll();
 };
 
+// Markup
 window.updateMarkup = function() {
     const slider = document.getElementById("markup-slider");
     const input = document.getElementById("markup-input");
@@ -131,6 +151,7 @@ window.updateMarkup = function() {
     calculateAll();
 };
 
+// Markup Chart
 function renderMarkupScenarios() {
     const tbody = document.getElementById("markup-scenarios-body");
     if (!tbody) return;

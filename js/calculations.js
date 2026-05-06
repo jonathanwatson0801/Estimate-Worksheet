@@ -13,6 +13,7 @@ function calculateConsumablesTotal() { return estimate.consumables.reduce((sum, 
 function calculatePaintSuppliesTotal() { return estimate.paintSupplies.reduce((sum, row) => sum + calculateLineTotal(row), 0); }
 function calculatePaintLaborTotal() { return estimate.paintLabor.reduce((sum, row) => sum + calculateLaborTotal(row), 0); }
 function calculateFuelTotal() { return estimate.fuel.reduce((sum, row) => sum + (row.tankFills || 0) * (row.costPerFill || 0), 0); }
+function calculateRentalTotal() { return estimate.rentalEquip.reduce((sum, row) => sum + (row.rentLength || 0) * (row.rentCost || 0), 0); }
 
 function calculateShopWithMarkup() {
     const subtotal = estimate.shopLabor.reduce((sum, row) => sum + calculateLaborTotal(row), 0);
@@ -29,6 +30,7 @@ function calculateGrandCost() {
            calculatePaintSuppliesTotal() +
            calculatePaintLaborTotal() +
            calculateFuelTotal() +
+           calculateRentalTotal() +
            calculateShopWithMarkup() +
            calculateFieldWithMarkup() +
            Object.values(estimate.otherCosts).reduce((sum, val) => sum + val, 0);

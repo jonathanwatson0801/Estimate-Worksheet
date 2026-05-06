@@ -6,13 +6,13 @@ let estimate = {
     footage: 0,
     materials: [],
     consumables: [],
+    shopLabor: [],
+    fieldLabor: [],
     paintSupplies: [],
     paintLabor: [],
     fuel: [],
-    shopLabor: [],
-    fieldLabor: [],
+    rentalEquip: [],
     otherCosts: {
-        rentalEquip: 0,
         toolExpense: 0,
         tripFees: 0
     },
