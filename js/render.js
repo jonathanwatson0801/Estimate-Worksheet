@@ -111,6 +111,44 @@ function renderFuel() {
     document.getElementById("fuel-total").textContent = formatCurrency(calculateFuelTotal());
 }
 
+function renderTripFee() {
+    const tbody = document.getElementById("trip-body");
+    if (!tbody) return;
+
+    tbody.innerHTML = "";
+    estimate.tripFee.forEach((row, index) => {
+        const total = (row.numberOfTrips || 0) * (row.costPerTrip || 0);
+
+        const tr = document.createElement("tr");
+        tr.className = "group hover:bg-emerald-50 transition-colors";
+        tr.innerHTML = `
+            <td class="pl-8 py-4">
+                <input type="text" value="${row.description || ''}" 
+                       class="table-input text-left" 
+                       onchange="updateTrip(${index}, 'description', this.value)">
+            </td>
+            <td class="text-center py-4">
+                <input type="number" value="${row.numberOfTrips || 0}" min="0" step="0.1" 
+                       class="table-input w-28" 
+                       onchange="updateTrip(${index}, 'numberOfTrips', parseFloat(this.value) || 0)">
+            </td>
+            <td class="text-center py-4">
+                <input type="number" value="${row.costPerTrip || 0}" min="0" step="0.01" 
+                       class="table-input w-32" 
+                       onchange="updateTrip(${index}, 'costPerTrip', parseFloat(this.value) || 0)">
+            </td>
+            <td class="text-right pr-8 py-4 font-semibold">${formatCurrency(total)}</td>
+            <td class="pr-4">
+                <button onclick="deleteTripRow(${index})" 
+                        class="delete-btn opacity-0 group-hover:opacity-100 text-xl">×</button>
+            </td>
+        `;
+        tbody.appendChild(tr);
+    });
+
+    document.getElementById("trip-total").textContent = formatCurrency(calculateTripTotal());
+}
+
 function renderRental() {
     const tbody = document.getElementById("rental-body");
     if (!tbody) return;
@@ -228,7 +266,7 @@ function updateLaborTableHeaders(sectionKey) {
 
 function renderOtherCosts() {
     const container = document.getElementById("other-costs");
-    const labels = { rentalEquip: "Rental Equipment", toolExpense: "Tool Expense", tripFees: "Trip Fees" };
+    const labels = { toolExpense: "Tool Expense"};
 
     container.innerHTML = Object.keys(estimate.otherCosts).map(key => {
         const value = estimate.otherCosts[key] || 0;

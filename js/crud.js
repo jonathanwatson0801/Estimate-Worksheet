@@ -133,6 +133,20 @@ window.addRentalRow = function() {
 window.updateRental = function(index, field, value) { estimate.rentalEquip[index][field] = value; calculateAll(); };
 window.deleteRentalRow = function(index) { estimate.rentalEquip.splice(index, 1); calculateAll(); };
 
+// Trip Fees
+window.addTripRow = function() {
+    estimate.tripFee.push({
+        id: generateId(),
+        description: "Trip Fee",
+        numberOfTrips: 1,
+        costPerTrip: 75
+    });
+    renderTripFee();
+    calculateAll();
+};
+window.updateTrip = function(index, field, value) { estimate.tripFee[index][field] = value; calculateAll(); };
+window.deleteTripRow = function(index) { estimate.tripFee.splice(index, 1); calculateAll(); };
+
 // Other Costs
 window.updateOtherCost = function(key, value) {
     estimate.otherCosts[key] = value;

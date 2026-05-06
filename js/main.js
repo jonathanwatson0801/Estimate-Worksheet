@@ -18,6 +18,7 @@ function calculateAll() {
     renderPaintLabor();
     renderFuel();
     renderRental();
+    renderTripFee();
 
     renderLabor("shop-body", estimate.shopLabor, "updateShopLabor", "deleteShopLaborRow", "shop-subtotal", "shop-markup-input", "shop-with-markup", estimate.shopLaborMarkupPercent, "shopLabor");
     renderLabor("field-body", estimate.fieldLabor, "updateFieldLabor", "deleteFieldLaborRow", "field-subtotal", "field-markup-input", "field-with-markup", estimate.fieldLaborMarkupPercent, "fieldLabor");
@@ -200,6 +201,7 @@ window.resetEstimate = function() {
     estimate.shopLabor = [];
     estimate.fieldLabor = [];
     estimate.rentalEquip = [];
+    estimate.tripFee = [];
 
     estimate.jobAddress = "";
     estimate.jobDescription = "";

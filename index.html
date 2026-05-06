@@ -334,60 +334,86 @@
                 </div>
             </div>
 
-            <!-- Rental Equip -->
-            <div class="mt-8">
-                <div class="flex items-baseline justify-between mb-4">
-                    <h2 class="text-2xl font-semibold">Rental Equipment</h2>
-                    <button onclick="addRentalRow()" class="flex items-center gap-x-2 px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold rounded-2xl transition-colors">
-                        <span class="text-xl leading-none">+</span> ADD ROW
-                    </button>
-                </div>
-                <div class="bg-white shadow rounded-3xl overflow-hidden">
-                    <table class="w-full" id="rental-table">
-                        <thead>
-                            <tr class="bg-gray-50 border-b text-sm text-gray-500">
-                                <th class="text-left pl-8 py-5 font-medium w-2/5">DESCRIPTION</th>
-                                <th class="text-center py-5 font-medium w-28">Rental Length</th>
-                                <th class="text-center py-5 font-medium w-32">Rental Cost (Per Day)</th>
-                                <th class="text-right pr-8 py-5 font-medium w-32">TOTAL</th>
-                                <th class="w-12"></th>
-                            </tr>
-                        </thead>
-                        <tbody id="rental-body" class="divide-y text-lg"></tbody>
-                    </table>
-                    <div class="px-8 py-6 border-t bg-gray-50 text-right">
-                        <span class="text-sm text-gray-500">Rental TOTAL</span>
-                        <div id="rental-total" class="text-4xl font-bold text-emerald-600">$0.00</div>
-                    </div>
+                   <!-- RENTAL EQUIPMENT -->
+        <div class="mt-8">
+            <div class="flex items-baseline justify-between mb-4">
+                <h2 class="text-2xl font-semibold">Rental Equipment</h2>
+                <button onclick="addRentalRow()" class="flex items-center gap-x-2 px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold rounded-2xl transition-colors">
+                    <span class="text-xl leading-none">+</span> ADD ROW
+                </button>
+            </div>
+            <div class="bg-white shadow rounded-3xl overflow-hidden">
+                <table class="w-full" id="rental-table">
+                    <thead>
+                        <tr class="bg-gray-50 border-b text-sm text-gray-500">
+                            <th class="text-left pl-8 py-5 font-medium w-2/5">DESCRIPTION</th>
+                            <th class="text-center py-5 font-medium w-28">Rental Length</th>
+                            <th class="text-center py-5 font-medium w-32">Rental Cost (Per Day)</th>
+                            <th class="text-right pr-8 py-5 font-medium w-32">TOTAL</th>
+                            <th class="w-12"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="rental-body" class="divide-y text-lg"></tbody>
+                </table>
+                <div class="px-8 py-6 border-t bg-gray-50 text-right">
+                    <span class="text-sm text-gray-500">RENTAL TOTAL</span>
+                    <div id="rental-total" class="text-4xl font-bold text-emerald-600">$0.00</div>
                 </div>
             </div>
         </div>
 
-            <!-- FUEL -->
-            <div class="mt-8">
-                <div class="flex items-baseline justify-between mb-4">
-                    <h2 class="text-2xl font-semibold">FUEL</h2>
-                    <button onclick="addFuelRow()" class="flex items-center gap-x-2 px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold rounded-2xl transition-colors">
-                        <span class="text-xl leading-none">+</span> ADD ROW
-                    </button>
+        <!-- TRIP FEES -->
+        <div class="mt-8">
+            <div class="flex items-baseline justify-between mb-4">
+                <h2 class="text-2xl font-semibold">Trip Fees</h2>
+                <button onclick="addTripRow()" class="flex items-center gap-x-2 px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold rounded-2xl transition-colors">
+                    <span class="text-xl leading-none">+</span> ADD ROW
+                </button>
+            </div>
+            <div class="bg-white shadow rounded-3xl overflow-hidden">
+                <table class="w-full" id="trip-table">
+                    <thead>
+                        <tr class="bg-gray-50 border-b text-sm text-gray-500">
+                            <th class="text-left pl-8 py-5 font-medium w-2/5">DESCRIPTION</th>
+                            <th class="text-center py-5 font-medium w-28">Number of Trips</th>
+                            <th class="text-center py-5 font-medium w-32">Cost Per Trip</th>
+                            <th class="text-right pr-8 py-5 font-medium w-32">TOTAL</th>
+                            <th class="w-12"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="trip-body" class="divide-y text-lg"></tbody>
+                </table>
+                <div class="px-8 py-6 border-t bg-gray-50 text-right">
+                    <span class="text-sm text-gray-500">TRIP TOTAL</span>
+                    <div id="trip-total" class="text-4xl font-bold text-emerald-600">$0.00</div>
                 </div>
-                <div class="bg-white shadow rounded-3xl overflow-hidden">
-                    <table class="w-full" id="fuel-table">
-                        <thead>
-                            <tr class="bg-gray-50 border-b text-sm text-gray-500">
-                                <th class="text-left pl-8 py-5 font-medium w-2/5">DESCRIPTION</th>
-                                <th class="text-center py-5 font-medium w-28">TANK FILLS</th>
-                                <th class="text-center py-5 font-medium w-32">COST PER FILL</th>
-                                <th class="text-right pr-8 py-5 font-medium w-32">TOTAL</th>
-                                <th class="w-12"></th>
-                            </tr>
-                        </thead>
-                        <tbody id="fuel-body" class="divide-y text-lg"></tbody>
-                    </table>
-                    <div class="px-8 py-6 border-t bg-gray-50 text-right">
-                        <span class="text-sm text-gray-500">FUEL TOTAL</span>
-                        <div id="fuel-total" class="text-4xl font-bold text-emerald-600">$0.00</div>
-                    </div>
+            </div>
+        </div>
+
+        <!-- FUEL -->
+        <div class="mt-8">
+            <div class="flex items-baseline justify-between mb-4">
+                <h2 class="text-2xl font-semibold">FUEL</h2>
+                <button onclick="addFuelRow()" class="flex items-center gap-x-2 px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold rounded-2xl transition-colors">
+                    <span class="text-xl leading-none">+</span> ADD ROW
+                </button>
+            </div>
+            <div class="bg-white shadow rounded-3xl overflow-hidden">
+                <table class="w-full" id="fuel-table">
+                    <thead>
+                        <tr class="bg-gray-50 border-b text-sm text-gray-500">
+                            <th class="text-left pl-8 py-5 font-medium w-2/5">DESCRIPTION</th>
+                            <th class="text-center py-5 font-medium w-28">TANK FILLS</th>
+                            <th class="text-center py-5 font-medium w-32">COST PER FILL</th>
+                            <th class="text-right pr-8 py-5 font-medium w-32">TOTAL</th>
+                            <th class="w-12"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="fuel-body" class="divide-y text-lg"></tbody>
+                </table>
+                <div class="px-8 py-6 border-t bg-gray-50 text-right">
+                    <span class="text-sm text-gray-500">FUEL TOTAL</span>
+                    <div id="fuel-total" class="text-4xl font-bold text-emerald-600">$0.00</div>
                 </div>
             </div>
         </div>

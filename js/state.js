@@ -12,9 +12,9 @@ let estimate = {
     paintLabor: [],
     fuel: [],
     rentalEquip: [],
+    tripFee: [],
     otherCosts: {
         toolExpense: 0,
-        tripFees: 0
     },
     materialMarkupPercent: 15,
     materialTaxRate: 8.25,
