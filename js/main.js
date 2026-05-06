@@ -77,6 +77,9 @@ window.loadEstimate = function() {
             } catch (err) {
                 alert("❌ Error loading file. Please select a valid .json estimate file.");
             }
+            // Re-format phone after loading
+const phoneInput = document.getElementById("customer-phone");
+if (phoneInput) formatPhoneNumber(phoneInput);
         };
         reader.readAsText(file);
     };
@@ -162,6 +165,25 @@ window.printEstimate = function() {
         document.title = originalTitle;
     }, 1500);
 }; 
+
+// Phone number formatter - (XXX) XXX-XXXX
+function formatPhoneNumber(input) {
+    let value = input.value.replace(/\D/g, ''); // Remove all non-digits
+    
+    if (value.length > 10) {
+        value = value.substring(0, 10); // Limit to 10 digits
+    }
+
+    if (value.length > 6) {
+        value = `(${value.substring(0,3)}) ${value.substring(3,6)}-${value.substring(6)}`;
+    } else if (value.length > 3) {
+        value = `(${value.substring(0,3)}) ${value.substring(3)}`;
+    } else if (value.length > 0) {
+        value = `(${value}`;
+    }
+
+    input.value = value;
+}
 
 // ==================== Reset Estimate ====================
 window.resetEstimate = function() {
