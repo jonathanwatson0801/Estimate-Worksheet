@@ -175,10 +175,10 @@ function renderMarkupScenarios() {
     for (let percent = 5; percent <= 100; percent += 5) {
         const totalPrice = grandCost * (1 + percent / 100);
         const perFoot = totalPrice / footage;
-        html += `<tr class="hover:bg-white/20 transition-colors border-b border-white/10 last:border-none">
-            <td class="py-4 pl-4 text-left font-medium text-white">${percent}%</td>
-            <td class="py-4 text-right font-semibold text-white">${formatCurrency(totalPrice)}</td>
-            <td class="py-4 pr-4 text-right font-semibold text-emerald-200">${perFoot.toFixed(2)}</td>
+        html += `<tr>
+            <td>${percent}%</td>
+            <td>${formatCurrency(totalPrice)}</td>
+            <td>${perFoot.toFixed(2)}</td>
         </tr>`;
     }
     tbody.innerHTML = html;

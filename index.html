@@ -5,134 +5,129 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="Logo.PNG">
     <title>Estimate Worksheet</title>
-    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="styles.css">
-    
 </head>
-<body class="bg-gray-50">
-    <div class="max-w-7xl mx-auto px-4 py-8">
-        
+<body>
+    <div class="page-wrapper">
+
         <!--*=============== HEADER ====================-->
-        <div class="flex items-center justify-between border-b pb-6 mb-8">
-            <div class="flex items-center gap-x-4">
-                <img src="Logo.PNG" alt="Modern Steel and Fence" class="h-16 w-auto">
+        <div class="page-header">
+            <div class="brand">
+                <img src="Logo.PNG" alt="Modern Steel and Fence" class="brand-logo">
                 <div>
-                    <h1 class="text-4xl font-bold tracking-tight text-gray-900">Modern Steel and Fence</h1>
-                    <p class="text-2xl text-emerald-700 font-medium">Estimate Worksheet</p>
+                    <h1 class="brand-name">Modern Steel and Fence</h1>
+                    <p class="brand-subtitle">Estimate Worksheet</p>
                 </div>
             </div>
-            <div class="flex items-center gap-x-3">
-
-                <button onclick="resetEstimate()" 
-                    class="flex items-center gap-x-2 px-5 py-2.5 bg-white border border-red-300 text-red-600 hover:bg-red-50 rounded-2xl text-sm font-semibold transition-colors">
-                    🔄 Reset
-                </button>
-
-                <button onclick="saveEstimate()" class="flex items-center gap-x-2 px-5 py-2.5 bg-white border border-gray-300 rounded-2xl text-sm font-semibold hover:bg-gray-50 transition-colors">💾 Save</button>
-                <button onclick="loadEstimate()" class="flex items-center gap-x-2 px-5 py-2.5 bg-white border border-gray-300 rounded-2xl text-sm font-semibold hover:bg-gray-50 transition-colors">📂 Load</button>
-                <button onclick="printEstimate()" class="flex items-center gap-x-2 px-5 py-2.5 bg-emerald-600 text-white rounded-2xl text-sm font-semibold hover:bg-emerald-700 transition-colors">🖨️ Print / PDF</button>
-                <div class="text-right text-xs text-gray-500">
-                    <div id="last-saved" class="font-mono"></div>
+            <div class="header-nav">
+                <button onclick="resetEstimate()" class="btn btn-danger">🔄 Reset</button>
+                <button onclick="saveEstimate()"  class="btn btn-secondary">💾 Save</button>
+                <button onclick="loadEstimate()"  class="btn btn-secondary">📂 Load</button>
+                <button onclick="printEstimate()" class="btn btn-primary">🖨️ Print / PDF</button>
+                <div class="last-saved">
+                    <div id="last-saved"></div>
                 </div>
             </div>
         </div>
 
         <!--*=============== JOB INFO ===============-->
-        <div class="bg-white shadow rounded-3xl p-8 mb-10">
-            <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+        <div class="card-padded">
+            <div class="form-grid">
 
-                <!-- Customer Info-->
-                <div class="md:col-span-7">
-                    <label class="block text-sm font-medium text-gray-500 mb-3">CUSTOMER INFO</label>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                    <label class="block text-xs text-gray-500 mb-1">NAME</label>
-                    <input type="text" id="customer-name" 
-                        class="w-full px-5 py-3 border border-gray-200 focus:border-emerald-300 rounded-2xl focus:outline-none text-lg"
-                        placeholder="John Smith" oninput="calculateAll()">
+                <!-- Customer Info -->
+                <div class="form-col-7">
+                    <span class="field-label-md">CUSTOMER INFO</span>
+                    <div class="customer-grid">
+                        <div>
+                            <label class="field-label">NAME</label>
+                            <input type="text" id="customer-name" class="field-input"
+                                placeholder="John Smith" oninput="calculateAll()">
+                        </div>
+                        <div>
+                            <label class="field-label">COMPANY</label>
+                            <input type="text" id="customer-company" class="field-input"
+                                placeholder="Smith Construction" oninput="calculateAll()">
+                        </div>
+                        <div>
+                            <label class="field-label">PHONE NUMBER</label>
+                            <input type="tel" id="customer-phone" class="field-input"
+                                placeholder="(512) 555-1234" maxlength="14"
+                                oninput="formatPhoneNumber(this); calculateAll()">
+                        </div>
+                        <div>
+                            <label class="field-label">EMAIL</label>
+                            <input type="email" id="customer-email" class="field-input"
+                                placeholder="john@smithconstruction.com" oninput="calculateAll()">
+                        </div>
+                    </div>
                 </div>
-                <div>
-                    <label class="block text-xs text-gray-500 mb-1">COMPANY</label>
-                    <input type="text" id="customer-company" 
-                        class="w-full px-5 py-3 border border-gray-200 focus:border-emerald-300 rounded-2xl focus:outline-none text-lg"
-                        placeholder="Smith Construction" oninput="calculateAll()">
-                </div>
-                <div>
-                    <label class="block text-xs text-gray-500 mb-1">PHONE NUMBER</label>
-                    <input type="tel" id="customer-phone"
-                        class="w-full px-5 py-3 border border-gray-200 focus:border-emerald-300 rounded-2xl focus:outline-none text-lg"
-                        placeholder="(512) 555-1234" maxlength="14"
-                        oninput="formatPhoneNumber(this); calculateAll()">
-                </div>
-                <div>
-                    <label class="block text-xs text-gray-500 mb-1">EMAIL</label>
-                    <input type="email" id="customer-email" 
-                        class="w-full px-5 py-3 border border-gray-200 focus:border-emerald-300 rounded-2xl focus:outline-none text-lg"
-                        placeholder="john@smithconstruction.com" oninput="calculateAll()">
-                </div>
-            </div>
-        </div>
 
                 <!-- Footage -->
-                <div class="md:col-span-2">
-                    <label class="block text-sm font-medium text-gray-500 mb-1">FOOTAGE (ft)</label>
-                    <input type="number" id="footage" class="w-full text-5xl font-semibold text-center border border-gray-200 focus:border-emerald-300 rounded-3xl h-20 focus:outline-none" value="0" oninput="calculateAll()">
-                    <p class="text-center text-xs text-gray-400 mt-1">linear feet</p>
+                <div class="form-col-2">
+                    <label class="field-label-md">FOOTAGE (ft)</label>
+                    <input type="number" id="footage" class="footage-input" value="0" oninput="calculateAll()">
+                    <p class="footage-unit">linear feet</p>
                 </div>
 
                 <!-- Job Address -->
-                <div class="md:col-span-5">
-                    <label class="block text-sm font-medium text-gray-500 mb-1">JOB ADDRESS</label>
-                    <textarea id="job-address" rows="3" 
-                        class="w-full px-5 py-4 border border-gray-200 focus:border-emerald-300 rounded-2xl resize-none focus:outline-none text-lg"></textarea>
+                <div class="form-col-5">
+                    <label class="field-label-md">JOB ADDRESS</label>
+                    <textarea id="job-address" rows="3" class="field-textarea"></textarea>
                 </div>
 
                 <!-- Description -->
-                <div class="md:col-span-5">
-                    <label class="block text-sm font-medium text-gray-500 mb-1">DESCRIPTION</label>
-                    <textarea id="job-description" rows="3" 
-                        class="w-full px-5 py-4 border border-gray-200 focus:border-emerald-300 rounded-2xl resize-none focus:outline-none text-lg"></textarea>
+                <div class="form-col-5">
+                    <label class="field-label-md">DESCRIPTION</label>
+                    <textarea id="job-description" rows="3" class="field-textarea"></textarea>
                 </div>
             </div>
         </div>
 
         <!--*=============== MATERIALS ===============-->
-        <div class="mb-12">
-            <div class="flex items-baseline justify-between mb-4">
-                <h2 class="text-2xl font-semibold">MATERIALS</h2>
-                <button onclick="addMaterialRow()" class="flex items-center gap-x-2 px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold rounded-2xl transition-colors">
-                    <span class="text-xl leading-none">+</span> ADD ROW
-                </button>
+        <div class="section">
+            <div class="section-header">
+                <h2 class="section-title">MATERIALS</h2>
+                <button onclick="addMaterialRow()" class="btn-add"><span class="plus">+</span> ADD ROW</button>
             </div>
-            <div class="bg-white shadow rounded-3xl overflow-hidden">
-                <table class="w-full" id="materials-table">
+            <div class="card">
+                <table class="data-table" id="materials-table">
                     <thead>
-                        <tr class="bg-gray-50 border-b text-sm text-gray-500">
-                            <th class="text-left pl-8 py-5 font-medium w-2/5">DESCRIPTION</th>
-                            <th class="text-left pl-4 py-5 font-medium w-48">VENDOR</th>
-                            <th class="text-center py-5 font-medium w-20">QTY</th>
-                            <th class="text-center py-5 font-medium w-32">UNIT COST</th>
-                            <th class="text-right pr-8 py-5 font-medium w-32">TOTAL</th>
-                            <th class="w-12"></th>
+                        <tr>
+                            <th class="th-desc">DESCRIPTION</th>
+                            <th class="th-vendor">VENDOR</th>
+                            <th class="th-center th-w20">QTY</th>
+                            <th class="th-center th-w32">UNIT COST</th>
+                            <th class="th-right th-w32">TOTAL</th>
+                            <th class="th-action"></th>
                         </tr>
                     </thead>
-                    <tbody id="materials-body" class="divide-y text-lg"></tbody>
+                    <tbody id="materials-body"></tbody>
                 </table>
-                <div class="px-8 py-8 border-t bg-gray-50">
-                    <div class="grid grid-cols-1 md:grid-cols-5 gap-6 text-center md:text-left">
-                        <div><span class="text-sm text-gray-500">MATERIALS SUBTOTAL</span><div id="materials-subtotal" class="text-3xl font-semibold">$0.00</div></div>
-                        <div><span class="text-sm text-gray-500">TAX (8.25%)</span><div id="materials-tax" class="text-3xl font-semibold text-amber-600">$0.00</div></div>
-                        <div><span class="text-sm text-gray-500">SUBTOTAL + TAX</span><div id="materials-taxed" class="text-3xl font-semibold">$0.00</div></div>
+                <div class="card-footer">
+                    <div class="summary-grid-5">
                         <div>
-                            <label class="block text-sm text-gray-500 mb-1">MATERIAL MARKUP %</label>
-                            <div class="flex items-center justify-center md:justify-start gap-x-2">
-                                <input type="number" id="material-markup-input" value="15" min="0" max="200" step="0.1" class="w-24 text-center text-3xl font-semibold border border-gray-200 rounded-2xl py-2 focus:outline-none focus:border-emerald-300" oninput="updateMaterialMarkup()">
-                                <span class="text-3xl font-light text-gray-400">%</span>
+                            <span class="summary-label">MATERIALS SUBTOTAL</span>
+                            <div id="materials-subtotal" class="summary-value">$0.00</div>
+                        </div>
+                        <div>
+                            <span class="summary-label">TAX (8.25%)</span>
+                            <div id="materials-tax" class="summary-value summary-value-amber">$0.00</div>
+                        </div>
+                        <div>
+                            <span class="summary-label">SUBTOTAL + TAX</span>
+                            <div id="materials-taxed" class="summary-value">$0.00</div>
+                        </div>
+                        <div>
+                            <label class="summary-label">MATERIAL MARKUP %</label>
+                            <div class="markup-row">
+                                <input type="number" id="material-markup-input" value="15" min="0" max="200" step="0.1"
+                                    class="markup-input" oninput="updateMaterialMarkup()">
+                                <span class="markup-percent">%</span>
                             </div>
                         </div>
-                        <div class="text-right">
-                            <span class="text-sm text-gray-500">MATERIALS WITH TAX + MARKUP</span>
-                            <div id="materials-with-markup" class="text-4xl font-bold text-emerald-600">$0.00</div>
+                        <div class="summary-right">
+                            <span class="summary-label">MATERIALS WITH TAX + MARKUP</span>
+                            <div id="materials-with-markup" class="summary-value-lg">$0.00</div>
                         </div>
                     </div>
                 </div>
@@ -140,99 +135,104 @@
         </div>
 
         <!--*=============== SHOP & FIELD LABOR ===============-->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+        <div class="labor-grid">
+
             <!-- SHOP LABOR -->
             <div>
-                <div class="flex items-baseline justify-between mb-4">
-                    <h2 class="text-2xl font-semibold">SHOP LABOR</h2>
-                    <div class="flex items-center gap-x-3">
-                        <span class="text-sm font-medium text-gray-500">Guys × Days</span>
-                        <label class="relative inline-flex items-center cursor-pointer">
-                            <input type="checkbox" id="shopLabor-mode" class="sr-only peer" onchange="toggleLaborMode('shopLabor')">
-                            <div class="w-11 h-6 bg-gray-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-emerald-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-600"></div>
+                <div class="section-header">
+                    <h2 class="section-title">SHOP LABOR</h2>
+                    <div class="mode-toggle-group">
+                        <span class="mode-label">Guys × Days</span>
+                        <label class="toggle-label">
+                            <input type="checkbox" id="shopLabor-mode" onchange="toggleLaborMode('shopLabor')">
+                            <span class="toggle-track"></span>
                         </label>
-                        <span class="text-sm font-medium text-emerald-600">Per Foot</span>
+                        <span class="mode-label-green">Per Foot</span>
                     </div>
-                    <button onclick="addShopLaborRow()" class="flex items-center gap-x-2 px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold rounded-2xl transition-colors">
-                        <span class="text-xl leading-none">+</span> ADD ROW
-                    </button>
+                    <button onclick="addShopLaborRow()" class="btn-add"><span class="plus">+</span> ADD ROW</button>
                 </div>
-                <div class="bg-white shadow rounded-3xl overflow-hidden">
-                    <table class="w-full" id="shop-table">
+                <div class="card">
+                    <table class="data-table" id="shop-table">
                         <thead>
-                            <tr class="bg-gray-50 border-b text-sm text-gray-500">
-                                <th class="text-left pl-8 py-4 font-medium">DESCRIPTION</th>
-                                <th class="text-center py-4 font-medium w-16" id="shop-labor-col1">GUYS</th>
-                                <th class="text-center py-4 font-medium w-16" id="shop-labor-col2">DAYS</th>
-                                <th class="text-center py-4 font-medium w-28" id="shop-labor-col3">RATE/DAY</th>
-                                <th class="text-right pr-8 py-4 font-medium w-32">TOTAL</th>
-                                <th class="w-10"></th>
+                            <tr>
+                                <th class="th-desc">DESCRIPTION</th>
+                                <th class="th-center th-w16" id="shop-labor-col1">GUYS</th>
+                                <th class="th-center th-w16" id="shop-labor-col2">DAYS</th>
+                                <th class="th-center th-w28" id="shop-labor-col3">RATE/DAY</th>
+                                <th class="th-right th-w32">TOTAL</th>
+                                <th class="th-action"></th>
                             </tr>
                         </thead>
-                        <tbody id="shop-body" class="divide-y text-lg"></tbody>
+                        <tbody id="shop-body"></tbody>
                     </table>
-                    <div class="px-8 py-6 border-t bg-gray-50">
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                            <div><span class="text-sm text-gray-500">SHOP SUBTOTAL</span><div id="shop-subtotal" class="text-3xl font-semibold">$0.00</div></div>
+                    <div class="card-footer-sm">
+                        <div class="summary-grid-3">
                             <div>
-                                <label class="block text-sm text-gray-500 mb-1">SHOP MARKUP %</label>
-                                <div class="flex items-center gap-x-2">
-                                    <input type="number" id="shop-markup-input" value="15" min="0" max="200" step="0.1" class="w-24 text-center text-3xl font-semibold border border-gray-200 rounded-2xl py-2 focus:outline-none focus:border-emerald-300" oninput="updateShopMarkup()">
-                                    <span class="text-3xl font-light text-gray-400">%</span>
+                                <span class="summary-label">SHOP SUBTOTAL</span>
+                                <div id="shop-subtotal" class="summary-value">$0.00</div>
+                            </div>
+                            <div>
+                                <label class="summary-label">SHOP MARKUP %</label>
+                                <div class="markup-row">
+                                    <input type="number" id="shop-markup-input" value="15" min="0" max="200" step="0.1"
+                                        class="markup-input" oninput="updateShopMarkup()">
+                                    <span class="markup-percent">%</span>
                                 </div>
                             </div>
-                            <div class="text-right">
-                                <span class="text-sm text-gray-500">SHOP WITH MARKUP</span>
-                                <div id="shop-with-markup" class="text-4xl font-bold text-emerald-600">$0.00</div>
+                            <div class="summary-right">
+                                <span class="summary-label">SHOP WITH MARKUP</span>
+                                <div id="shop-with-markup" class="summary-value-lg">$0.00</div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-                <!-- FIELD LABOR -->
+            <!-- FIELD LABOR -->
             <div>
-                <div class="flex items-baseline justify-between mb-4">
-                    <h2 class="text-2xl font-semibold">FIELD LABOR</h2>
-                    <div class="flex items-center gap-x-3">
-                        <span class="text-sm font-medium text-gray-500">Guys × Days</span>
-                        <label class="relative inline-flex items-center cursor-pointer">
-                            <input type="checkbox" id="fieldLabor-mode" class="sr-only peer" onchange="toggleLaborMode('fieldLabor')">
-                            <div class="w-11 h-6 bg-gray-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-emerald-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-600"></div>
+                <div class="section-header">
+                    <h2 class="section-title">FIELD LABOR</h2>
+                    <div class="mode-toggle-group">
+                        <span class="mode-label">Guys × Days</span>
+                        <label class="toggle-label">
+                            <input type="checkbox" id="fieldLabor-mode" onchange="toggleLaborMode('fieldLabor')">
+                            <span class="toggle-track"></span>
                         </label>
-                        <span class="text-sm font-medium text-emerald-600">Per Foot</span>
+                        <span class="mode-label-green">Per Foot</span>
                     </div>
-                    <button onclick="addFieldLaborRow()" class="flex items-center gap-x-2 px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold rounded-2xl transition-colors">
-                        <span class="text-xl leading-none">+</span> ADD ROW
-                    </button>
+                    <button onclick="addFieldLaborRow()" class="btn-add"><span class="plus">+</span> ADD ROW</button>
                 </div>
-                <div class="bg-white shadow rounded-3xl overflow-hidden">
-                    <table class="w-full" id="field-table">
+                <div class="card">
+                    <table class="data-table" id="field-table">
                         <thead>
-                            <tr class="bg-gray-50 border-b text-sm text-gray-500">
-                                <th class="text-left pl-8 py-4 font-medium">DESCRIPTION</th>
-                                <th class="text-center py-4 font-medium w-16" id="field-labor-col1">GUYS</th>
-                                <th class="text-center py-4 font-medium w-16" id="field-labor-col2">DAYS</th>
-                                <th class="text-center py-4 font-medium w-28" id="field-labor-col3">RATE/DAY</th>
-                                <th class="text-right pr-8 py-4 font-medium w-32">TOTAL</th>
-                                <th class="w-10"></th>
+                            <tr>
+                                <th class="th-desc">DESCRIPTION</th>
+                                <th class="th-center th-w16" id="field-labor-col1">GUYS</th>
+                                <th class="th-center th-w16" id="field-labor-col2">DAYS</th>
+                                <th class="th-center th-w28" id="field-labor-col3">RATE/DAY</th>
+                                <th class="th-right th-w32">TOTAL</th>
+                                <th class="th-action"></th>
                             </tr>
                         </thead>
-                        <tbody id="field-body" class="divide-y text-lg"></tbody>
+                        <tbody id="field-body"></tbody>
                     </table>
-                    <div class="px-8 py-6 border-t bg-gray-50">
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                            <div><span class="text-sm text-gray-500">FIELD SUBTOTAL</span><div id="field-subtotal" class="text-3xl font-semibold">$0.00</div></div>
+                    <div class="card-footer-sm">
+                        <div class="summary-grid-3">
                             <div>
-                                <label class="block text-sm text-gray-500 mb-1">FIELD MARKUP %</label>
-                                <div class="flex items-center gap-x-2">
-                                    <input type="number" id="field-markup-input" value="15" min="0" max="200" step="0.1" class="w-24 text-center text-3xl font-semibold border border-gray-200 rounded-2xl py-2 focus:outline-none focus:border-emerald-300" oninput="updateFieldMarkup()">
-                                    <span class="text-3xl font-light text-gray-400">%</span>
+                                <span class="summary-label">FIELD SUBTOTAL</span>
+                                <div id="field-subtotal" class="summary-value">$0.00</div>
+                            </div>
+                            <div>
+                                <label class="summary-label">FIELD MARKUP %</label>
+                                <div class="markup-row">
+                                    <input type="number" id="field-markup-input" value="15" min="0" max="200" step="0.1"
+                                        class="markup-input" oninput="updateFieldMarkup()">
+                                    <span class="markup-percent">%</span>
                                 </div>
                             </div>
-                            <div class="text-right">
-                                <span class="text-sm text-gray-500">FIELD WITH MARKUP</span>
-                                <div id="field-with-markup" class="text-4xl font-bold text-emerald-600">$0.00</div>
+                            <div class="summary-right">
+                                <span class="summary-label">FIELD WITH MARKUP</span>
+                                <div id="field-with-markup" class="summary-value-lg">$0.00</div>
                             </div>
                         </div>
                     </div>
@@ -240,231 +240,222 @@
             </div>
         </div>
 
-        <!-- CONSUMABLES + PAINT + FUEL -->
-        <div class="mb-12">
-            <!-- Consumables -->
-            <div class="flex items-baseline justify-between mb-4">
-                <h2 class="text-2xl font-semibold">CONSUMABLES</h2>
-                <button onclick="addConsumableRow()" class="flex items-center gap-x-2 px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold rounded-2xl transition-colors">
-                    <span class="text-xl leading-none">+</span> ADD ROW
-                </button>
+        <!-- CONSUMABLES -->
+        <div class="section">
+            <div class="section-header">
+                <h2 class="section-title">CONSUMABLES</h2>
+                <button onclick="addConsumableRow()" class="btn-add"><span class="plus">+</span> ADD ROW</button>
             </div>
-            <div class="bg-white shadow rounded-3xl overflow-hidden mb-8">
-                <table class="w-full" id="consumables-table">
+            <div class="card" style="margin-bottom:2rem;">
+                <table class="data-table" id="consumables-table">
                     <thead>
-                        <tr class="bg-gray-50 border-b text-sm text-gray-500">
-                            <th class="text-left pl-8 py-5 font-medium w-2/5">DESCRIPTION</th>
-                            <th class="text-center py-5 font-medium w-20">QTY</th>
-                            <th class="text-center py-5 font-medium w-32">UNIT COST</th>
-                            <th class="text-right pr-8 py-5 font-medium w-32">TOTAL</th>
-                            <th class="w-12"></th>
+                        <tr>
+                            <th class="th-desc">DESCRIPTION</th>
+                            <th class="th-center th-w20">QTY</th>
+                            <th class="th-center th-w32">UNIT COST</th>
+                            <th class="th-right th-w32">TOTAL</th>
+                            <th class="th-action"></th>
                         </tr>
                     </thead>
-                    <tbody id="consumables-body" class="divide-y text-lg"></tbody>
+                    <tbody id="consumables-body"></tbody>
                 </table>
-                <div class="px-8 py-6 border-t bg-gray-50 text-right">
-                    <span class="text-sm text-gray-500">CONSUMABLES TOTAL</span>
-                    <div id="consumables-total" class="text-4xl font-bold text-emerald-600">$0.00</div>
+                <div class="card-footer-xs">
+                    <span class="summary-label">CONSUMABLES TOTAL</span>
+                    <div id="consumables-total" class="summary-value-lg">$0.00</div>
                 </div>
             </div>
 
             <!-- PAINT -->
-            <div class="flex items-baseline justify-between mb-4">
-                <h2 class="text-2xl font-semibold">PAINT</h2>
+            <div class="section-header">
+                <h2 class="section-title">PAINT</h2>
             </div>
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+            <div class="paint-grid">
                 <!-- Paint Supplies -->
                 <div>
-                    <div class="flex items-baseline justify-between mb-3">
-                        <h3 class="text-xl font-semibold">Paint Supplies</h3>
-                        <button onclick="addPaintSupplyRow()" class="flex items-center gap-x-2 px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold rounded-2xl transition-colors">
-                            <span class="text-xl leading-none">+</span> ADD ROW
-                        </button>
+                    <div class="section-header-sm">
+                        <h3 class="section-subtitle">Paint Supplies</h3>
+                        <button onclick="addPaintSupplyRow()" class="btn-add"><span class="plus">+</span> ADD ROW</button>
                     </div>
-                    <div class="bg-white shadow rounded-3xl overflow-hidden">
-                        <table class="w-full" id="paint-supplies-table">
+                    <div class="card">
+                        <table class="data-table" id="paint-supplies-table">
                             <thead>
-                                <tr class="bg-gray-50 border-b text-sm text-gray-500">
-                                    <th class="text-left pl-8 py-4 font-medium">DESCRIPTION</th>
-                                    <th class="text-center py-4 font-medium w-20">QTY</th>
-                                    <th class="text-center py-4 font-medium w-32">UNIT COST</th>
-                                    <th class="text-right pr-8 py-4 font-medium w-32">TOTAL</th>
-                                    <th class="w-12"></th>
+                                <tr>
+                                    <th class="th-desc">DESCRIPTION</th>
+                                    <th class="th-center th-w20">QTY</th>
+                                    <th class="th-center th-w32">UNIT COST</th>
+                                    <th class="th-right th-w32">TOTAL</th>
+                                    <th class="th-action"></th>
                                 </tr>
                             </thead>
-                            <tbody id="paint-supplies-body" class="divide-y text-lg"></tbody>
+                            <tbody id="paint-supplies-body"></tbody>
                         </table>
-                        <div class="px-8 py-5 text-right border-t">
-                            <span class="text-sm text-gray-500">PAINT SUPPLIES TOTAL</span>
-                            <div id="paint-supplies-total" class="text-3xl font-bold text-emerald-600">$0.00</div>
+                        <div class="card-footer-xs">
+                            <span class="summary-label">PAINT SUPPLIES TOTAL</span>
+                            <div id="paint-supplies-total" class="summary-value">$0.00</div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Paint Labor -->
                 <div>
-                    <div class="flex items-baseline justify-between mb-3">
-                        <h3 class="text-xl font-semibold">Paint Labor</h3>
-                        <div class="flex items-center gap-x-3">
-                            <span class="text-sm font-medium text-gray-500">Guys × Days</span>
-                            <label class="relative inline-flex items-center cursor-pointer">
-                                <input type="checkbox" id="paintLabor-mode" class="sr-only peer" onchange="toggleLaborMode('paintLabor')">
-                                <div class="w-11 h-6 bg-gray-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-emerald-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-600"></div>
+                    <div class="section-header-sm">
+                        <h3 class="section-subtitle">Paint Labor</h3>
+                        <div class="mode-toggle-group">
+                            <span class="mode-label">Guys × Days</span>
+                            <label class="toggle-label">
+                                <input type="checkbox" id="paintLabor-mode" onchange="toggleLaborMode('paintLabor')">
+                                <span class="toggle-track"></span>
                             </label>
-                            <span class="text-sm font-medium text-emerald-600">Per Foot</span>
+                            <span class="mode-label-green">Per Foot</span>
                         </div>
-                        <button onclick="addPaintLaborRow()" class="flex items-center gap-x-2 px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold rounded-2xl transition-colors">
-                            <span class="text-xl leading-none">+</span> ADD ROW
-                        </button>
+                        <button onclick="addPaintLaborRow()" class="btn-add"><span class="plus">+</span> ADD ROW</button>
                     </div>
-                    <div class="bg-white shadow rounded-3xl overflow-hidden">
-                        <table class="w-full" id="paint-labor-table">
+                    <div class="card">
+                        <table class="data-table" id="paint-labor-table">
                             <thead>
-                                <tr class="bg-gray-50 border-b text-sm text-gray-500">
-                                    <th class="text-left pl-8 py-4 font-medium">DESCRIPTION</th>
-                                    <th class="text-center py-4 font-medium w-20" id="paint-labor-col1">GUYS</th>
-                                    <th class="text-center py-4 font-medium w-20" id="paint-labor-col2">DAYS</th>
-                                    <th class="text-center py-4 font-medium w-28" id="paint-labor-col3">RATE/DAY</th>
-                                    <th class="text-right pr-8 py-4 font-medium w-32">TOTAL</th>
-                                    <th class="w-10"></th>
+                                <tr>
+                                    <th class="th-desc">DESCRIPTION</th>
+                                    <th class="th-center th-w20" id="paint-labor-col1">GUYS</th>
+                                    <th class="th-center th-w20" id="paint-labor-col2">DAYS</th>
+                                    <th class="th-center th-w28" id="paint-labor-col3">RATE/DAY</th>
+                                    <th class="th-right th-w32">TOTAL</th>
+                                    <th class="th-action"></th>
                                 </tr>
                             </thead>
-                            <tbody id="paint-labor-body" class="divide-y text-lg"></tbody>
+                            <tbody id="paint-labor-body"></tbody>
                         </table>
-                        <div class="px-8 py-5 text-right border-t">
-                            <span class="text-sm text-gray-500">PAINT LABOR TOTAL</span>
-                            <div id="paint-labor-total" class="text-3xl font-bold text-emerald-600">$0.00</div>
+                        <div class="card-footer-xs">
+                            <span class="summary-label">PAINT LABOR TOTAL</span>
+                            <div id="paint-labor-total" class="summary-value">$0.00</div>
                         </div>
                     </div>
                 </div>
             </div>
 
-                   <!-- RENTAL EQUIPMENT -->
-        <div class="mt-8">
-            <div class="flex items-baseline justify-between mb-4">
-                <h2 class="text-2xl font-semibold">Rental Equipment</h2>
-                <button onclick="addRentalRow()" class="flex items-center gap-x-2 px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold rounded-2xl transition-colors">
-                    <span class="text-xl leading-none">+</span> ADD ROW
-                </button>
-            </div>
-            <div class="bg-white shadow rounded-3xl overflow-hidden">
-                <table class="w-full" id="rental-table">
-                    <thead>
-                        <tr class="bg-gray-50 border-b text-sm text-gray-500">
-                            <th class="text-left pl-8 py-5 font-medium w-2/5">DESCRIPTION</th>
-                            <th class="text-center py-5 font-medium w-28">Rental Length</th>
-                            <th class="text-center py-5 font-medium w-32">Rental Cost (Per Day)</th>
-                            <th class="text-right pr-8 py-5 font-medium w-32">TOTAL</th>
-                            <th class="w-12"></th>
-                        </tr>
-                    </thead>
-                    <tbody id="rental-body" class="divide-y text-lg"></tbody>
-                </table>
-                <div class="px-8 py-6 border-t bg-gray-50 text-right">
-                    <span class="text-sm text-gray-500">RENTAL TOTAL</span>
-                    <div id="rental-total" class="text-4xl font-bold text-emerald-600">$0.00</div>
+            <!-- RENTAL EQUIPMENT -->
+            <div class="subsection">
+                <div class="section-header">
+                    <h2 class="section-title">Rental Equipment</h2>
+                    <button onclick="addRentalRow()" class="btn-add"><span class="plus">+</span> ADD ROW</button>
+                </div>
+                <div class="card">
+                    <table class="data-table" id="rental-table">
+                        <thead>
+                            <tr>
+                                <th class="th-desc">DESCRIPTION</th>
+                                <th class="th-center th-w28">Rental Length</th>
+                                <th class="th-center th-w32">Rental Cost (Per Day)</th>
+                                <th class="th-right th-w32">TOTAL</th>
+                                <th class="th-action"></th>
+                            </tr>
+                        </thead>
+                        <tbody id="rental-body"></tbody>
+                    </table>
+                    <div class="card-footer-xs">
+                        <span class="summary-label">RENTAL TOTAL</span>
+                        <div id="rental-total" class="summary-value-lg">$0.00</div>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <!-- TRIP FEES -->
-        <div class="mt-8">
-            <div class="flex items-baseline justify-between mb-4">
-                <h2 class="text-2xl font-semibold">Trip Fees</h2>
-                <button onclick="addTripRow()" class="flex items-center gap-x-2 px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold rounded-2xl transition-colors">
-                    <span class="text-xl leading-none">+</span> ADD ROW
-                </button>
-            </div>
-            <div class="bg-white shadow rounded-3xl overflow-hidden">
-                <table class="w-full" id="trip-table">
-                    <thead>
-                        <tr class="bg-gray-50 border-b text-sm text-gray-500">
-                            <th class="text-left pl-8 py-5 font-medium w-2/5">DESCRIPTION</th>
-                            <th class="text-center py-5 font-medium w-28">Number of Trips</th>
-                            <th class="text-center py-5 font-medium w-32">Cost Per Trip</th>
-                            <th class="text-right pr-8 py-5 font-medium w-32">TOTAL</th>
-                            <th class="w-12"></th>
-                        </tr>
-                    </thead>
-                    <tbody id="trip-body" class="divide-y text-lg"></tbody>
-                </table>
-                <div class="px-8 py-6 border-t bg-gray-50 text-right">
-                    <span class="text-sm text-gray-500">TRIP TOTAL</span>
-                    <div id="trip-total" class="text-4xl font-bold text-emerald-600">$0.00</div>
+            <!-- TRIP FEES -->
+            <div class="subsection">
+                <div class="section-header">
+                    <h2 class="section-title">Trip Fees</h2>
+                    <button onclick="addTripRow()" class="btn-add"><span class="plus">+</span> ADD ROW</button>
+                </div>
+                <div class="card">
+                    <table class="data-table" id="trip-table">
+                        <thead>
+                            <tr>
+                                <th class="th-desc">DESCRIPTION</th>
+                                <th class="th-center th-w28">Number of Trips</th>
+                                <th class="th-center th-w32">Cost Per Trip</th>
+                                <th class="th-right th-w32">TOTAL</th>
+                                <th class="th-action"></th>
+                            </tr>
+                        </thead>
+                        <tbody id="trip-body"></tbody>
+                    </table>
+                    <div class="card-footer-xs">
+                        <span class="summary-label">TRIP TOTAL</span>
+                        <div id="trip-total" class="summary-value-lg">$0.00</div>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <!-- FUEL -->
-        <div class="mt-8">
-            <div class="flex items-baseline justify-between mb-4">
-                <h2 class="text-2xl font-semibold">FUEL</h2>
-                <button onclick="addFuelRow()" class="flex items-center gap-x-2 px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold rounded-2xl transition-colors">
-                    <span class="text-xl leading-none">+</span> ADD ROW
-                </button>
-            </div>
-            <div class="bg-white shadow rounded-3xl overflow-hidden">
-                <table class="w-full" id="fuel-table">
-                    <thead>
-                        <tr class="bg-gray-50 border-b text-sm text-gray-500">
-                            <th class="text-left pl-8 py-5 font-medium w-2/5">DESCRIPTION</th>
-                            <th class="text-center py-5 font-medium w-28">TANK FILLS</th>
-                            <th class="text-center py-5 font-medium w-32">COST PER FILL</th>
-                            <th class="text-right pr-8 py-5 font-medium w-32">TOTAL</th>
-                            <th class="w-12"></th>
-                        </tr>
-                    </thead>
-                    <tbody id="fuel-body" class="divide-y text-lg"></tbody>
-                </table>
-                <div class="px-8 py-6 border-t bg-gray-50 text-right">
-                    <span class="text-sm text-gray-500">FUEL TOTAL</span>
-                    <div id="fuel-total" class="text-4xl font-bold text-emerald-600">$0.00</div>
+            <!-- FUEL -->
+            <div class="subsection">
+                <div class="section-header">
+                    <h2 class="section-title">FUEL</h2>
+                    <button onclick="addFuelRow()" class="btn-add"><span class="plus">+</span> ADD ROW</button>
+                </div>
+                <div class="card">
+                    <table class="data-table" id="fuel-table">
+                        <thead>
+                            <tr>
+                                <th class="th-desc">DESCRIPTION</th>
+                                <th class="th-center th-w28">TANK FILLS</th>
+                                <th class="th-center th-w32">COST PER FILL</th>
+                                <th class="th-right th-w32">TOTAL</th>
+                                <th class="th-action"></th>
+                            </tr>
+                        </thead>
+                        <tbody id="fuel-body"></tbody>
+                    </table>
+                    <div class="card-footer-xs">
+                        <span class="summary-label">FUEL TOTAL</span>
+                        <div id="fuel-total" class="summary-value-lg">$0.00</div>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <!-- OTHER COSTS -->
-        <div class="mb-12">
-            <h2 class="text-2xl font-semibold mb-4">OTHER COSTS</h2>
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" id="other-costs"></div>
+            <!-- OTHER COSTS -->
+            <div class="subsection" style="margin-bottom:3rem;">
+                <h2 class="section-title" style="margin-bottom:1rem;">OTHER COSTS</h2>
+                <div class="other-costs-grid" id="other-costs"></div>
+            </div>
         </div>
 
         <!-- GRAND TOTAL -->
-        <div class="bg-gradient-to-br from-emerald-700 to-emerald-900 text-white rounded-3xl p-10 shadow-2xl">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+        <div class="grand-total">
+            <div class="grand-total-grid">
                 <div>
-                    <div class="text-emerald-100 text-sm tracking-widest">GRAND TOTAL COST</div>
-                    <div id="grand-total-cost" class="text-6xl font-bold mt-2">$0.00</div>
+                    <div class="total-label">GRAND TOTAL COST</div>
+                    <div id="grand-total-cost" class="total-value">$0.00</div>
                 </div>
-                <div>
-                    <div class="text-emerald-100 text-sm tracking-widest mb-1">MARKUP</div>
-                    <div class="flex items-center gap-x-3">
-                        <input type="range" id="markup-slider" min="0" max="200" value="30" step="1" class="accent-white flex-1 cursor-pointer" oninput="updateMarkup()">
-                        <input type="text" id="markup-input" value="30" class="w-20 text-center bg-white/20 text-white font-bold text-3xl rounded-2xl py-1 focus:outline-none" oninput="updateMarkup()">
-                        <span class="text-3xl font-light">%</span>
+                <div class="markup-section">
+                    <div class="total-label">MARKUP</div>
+                    <div class="markup-slider-row">
+                        <input type="range" id="markup-slider" min="0" max="200" value="30" step="1"
+                            class="markup-slider" oninput="updateMarkup()">
+                        <input type="text" id="markup-input" value="30"
+                            class="markup-value-input" oninput="updateMarkup()">
+                        <span class="markup-percent-label">%</span>
                     </div>
                 </div>
-                <div class="text-right">
-                    <div class="text-emerald-100 text-sm tracking-widest">SELLING PRICE</div>
-                    <div id="selling-price" class="text-6xl font-bold mt-2">$0.00</div>
-                    <div id="per-foot-price" class="text-emerald-100 text-2xl font-medium mt-1">$0.00 / ft</div>
+                <div class="total-right">
+                    <div class="total-label">SELLING PRICE</div>
+                    <div id="selling-price" class="total-value">$0.00</div>
+                    <div id="per-foot-price" class="per-foot-price">$0.00 / ft</div>
                 </div>
             </div>
 
-            <div class="mt-12 pt-8 border-t border-white/30" id="markup-scenarios-section">
-                <h3 class="text-emerald-100 text-sm font-medium mb-4">MARKUP SCENARIOS • PER FOOT</h3>
-                <table class="w-full text-sm" id="markup-scenarios-table">
+            <div class="scenarios-section" id="markup-scenarios-section">
+                <h3 class="scenarios-title">MARKUP SCENARIOS • PER FOOT</h3>
+                <table class="scenarios-table" id="markup-scenarios-table">
                     <thead>
-                        <tr class="text-emerald-200 border-b border-white/30">
-                            <th class="text-left py-3 pl-4 font-normal">MARKUP %</th>
-                            <th class="text-right py-3 font-normal">TOTAL PRICE</th>
-                            <th class="text-right py-3 pr-4 font-normal">PER FOOT</th>
+                        <tr>
+                            <th style="text-align:left;padding-left:1rem;color:#a7f3d0;font-weight:normal;padding-bottom:0.75rem;">MARKUP %</th>
+                            <th style="text-align:right;color:#a7f3d0;font-weight:normal;padding-bottom:0.75rem;">TOTAL PRICE</th>
+                            <th style="text-align:right;padding-right:1rem;color:#a7f3d0;font-weight:normal;padding-bottom:0.75rem;">PER FOOT</th>
                         </tr>
                     </thead>
-                    <tbody id="markup-scenarios-body" class="divide-y divide-white/10 text-white"></tbody>
+                    <tbody id="markup-scenarios-body"></tbody>
                 </table>
             </div>
         </div>
+
     </div>
 
     <!-- JAVASCRIPT FILES -->
