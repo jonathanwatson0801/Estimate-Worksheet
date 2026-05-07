@@ -11,20 +11,21 @@ function calculateAll() {
     estimate.jobDescription = document.getElementById("job-description")?.value || "";
     estimate.footage = parseFloat(document.getElementById("footage")?.value) || 0;
 
-    // Render everything
-    renderMaterials();
-    renderConsumables();
-    renderPaintSupplies();
-    renderPaintLabor();
-    renderFuel();
-    renderRental();
-    renderTripFee();
-
-    renderLabor("shop-body", estimate.shopLabor, "updateShopLabor", "deleteShopLaborRow", "shop-subtotal", "shop-markup-input", "shop-with-markup", estimate.shopLaborMarkupPercent, "shopLabor");
-    renderLabor("field-body", estimate.fieldLabor, "updateFieldLabor", "deleteFieldLaborRow", "field-subtotal", "field-markup-input", "field-with-markup", estimate.fieldLaborMarkupPercent, "fieldLabor");
-    renderLabor("paint-labor-body", estimate.paintLabor, "updatePaintLabor", "deletePaintLaborRow", null, null, "paint-labor-total", 0, "paintLabor");
-
-    renderOtherCosts();
+    // Render everything — each wrapped so one failure doesn't block the grand total
+    const renders = [
+        () => renderMaterials(),
+        () => renderConsumables(),
+        () => renderPaintSupplies(),
+        () => renderPaintLabor(),
+        () => renderFuel(),
+        () => renderRental(),
+        () => renderTripFee(),
+        () => renderLabor("shop-body", estimate.shopLabor, "updateShopLabor", "deleteShopLaborRow", "shop-subtotal", "shop-markup-input", "shop-with-markup", estimate.shopLaborMarkupPercent, "shopLabor"),
+        () => renderLabor("field-body", estimate.fieldLabor, "updateFieldLabor", "deleteFieldLaborRow", "field-subtotal", "field-markup-input", "field-with-markup", estimate.fieldLaborMarkupPercent, "fieldLabor"),
+        () => renderLabor("paint-labor-body", estimate.paintLabor, "updatePaintLabor", "deletePaintLaborRow", null, null, "paint-labor-total", 0, "paintLabor"),
+        () => renderOtherCosts(),
+    ];
+    renders.forEach(fn => { try { fn(); } catch(e) { console.error("Render error:", e); } });
 
     const grandCost = calculateGrandCost();
     document.getElementById("grand-total-cost").textContent = formatCurrency(grandCost);
@@ -70,7 +71,28 @@ window.loadEstimate = function() {
             try {
                 const loadedData = JSON.parse(event.target.result);
                 Object.assign(estimate, loadedData);
-                
+
+                // Restore form fields so calculateAll() doesn't overwrite them with empty DOM values
+                const fields = {
+                    "customer-name": "customerName",
+                    "customer-company": "customerCompany",
+                    "customer-phone": "customerPhone",
+                    "customer-email": "customerEmail",
+                    "job-address": "jobAddress",
+                    "job-description": "jobDescription",
+                    "footage": "footage",
+                };
+                for (const [id, key] of Object.entries(fields)) {
+                    const el = document.getElementById(id);
+                    if (el) el.value = estimate[key] ?? "";
+                }
+
+                // Restore markup slider and input so they stay in sync with loaded value
+                const markupSlider = document.getElementById("markup-slider");
+                const markupInput = document.getElementById("markup-input");
+                if (markupSlider) markupSlider.value = estimate.markupPercent ?? 30;
+                if (markupInput) markupInput.value = estimate.markupPercent ?? 30;
+
                 // Refresh all UI
                 calculateAll();
                 
@@ -96,64 +118,98 @@ window.printEstimate = function() {
     const style = document.createElement('style');
     style.innerHTML = `
         @media print {
-            body { 
-                background: white !important; 
-                color: black !important; 
-                font-size: 11pt !important;
-                line-height: 1.3 !important;
+            @page { margin: 0.45in; }
+
+            body { background: white !important; color: black !important; font-size: 9pt !important; line-height: 1.2 !important; }
+
+            /* Hide non-print UI */
+            .no-print, button, input[type="range"], #markup-scenarios-table, #markup-scenarios-section { display: none !important; }
+            /* Hide labor mode toggles (Per Foot / Guys×Days switch) */
+            label.cursor-pointer, label.cursor-pointer + span, label.cursor-pointer ~ span { display: none !important; }
+
+            /* Container */
+            .max-w-7xl { max-width: 100% !important; margin: 0 !important; padding: 6px !important; }
+
+            /* Section spacing */
+            .mb-12, .mb-10 { margin-bottom: 6px !important; }
+            .mb-8, .mb-6   { margin-bottom: 4px !important; }
+            .mb-4, .mb-3   { margin-bottom: 2px !important; }
+            .mt-8          { margin-top: 6px !important; }
+            .pb-6          { padding-bottom: 2px !important; }
+            .py-8          { padding-top: 3px !important; padding-bottom: 3px !important; }
+            .py-6          { padding-top: 3px !important; padding-bottom: 3px !important; }
+            .py-5          { padding-top: 2px !important; padding-bottom: 2px !important; }
+            .py-4          { padding-top: 2px !important; padding-bottom: 2px !important; }
+            .p-8, .p-10    { padding: 4px 8px !important; }
+            .px-8          { padding-left: 8px !important; padding-right: 8px !important; }
+            .pl-8          { padding-left: 6px !important; }
+            .pr-8          { padding-right: 6px !important; }
+            .pl-4          { padding-left: 4px !important; }
+            .py-2\\.5      { padding-top: 1px !important; padding-bottom: 1px !important; }
+
+            /* Grid gaps */
+            .gap-10 { gap: 6px !important; }
+            .gap-8  { gap: 6px !important; }
+            .gap-6  { gap: 4px !important; }
+            .gap-4  { gap: 3px !important; }
+
+            /* Cards */
+            .shadow         { box-shadow: none !important; }
+            .rounded-3xl    { border-radius: 4px !important; border: 1px solid #e5e7eb !important; }
+
+            /* Headings */
+            h1 { font-size: 14pt !important; margin-bottom: 2px !important; }
+            h2 { font-size: 10pt !important; margin: 4px 0 2px !important; }
+
+            /* Text sizes */
+            .text-6xl, .text-5xl, .text-4xl { font-size: 12px !important; }
+            .text-3xl { font-size: 11px !important; }
+            .text-2xl { font-size: 10px !important; }
+            .text-xl, .text-lg { font-size: 9px !important; }
+            .text-sm, .text-xs { font-size: 8px !important; }
+
+            /* Tables */
+            table { font-size: 9pt !important; width: 100% !important; table-layout: auto !important; }
+            th, td { padding: 2px 4px !important; font-size: 9pt !important; }
+
+            /* Table inputs: render as plain readable text, no borders */
+            .table-input {
+                border: none !important;
+                background: transparent !important;
+                padding: 0 2px !important;
+                font-size: 9pt !important;
+                width: 100% !important;
+                overflow: visible !important;
             }
-            
-            /* Hide everything we don't need */
-            .no-print, button, input[type="range"], #markup-scenarios-table, 
-            .flex.items-center.gap-x-3 { display: none !important; }
-            
-            /* Make main container tighter */
-            .max-w-7xl { max-width: 100% !important; margin: 0 !important; padding: 10px !important; }
-            
-            /* Condense cards */
-            .shadow, .rounded-3xl { 
-                box-shadow: none !important; 
-                border: 1px solid #ddd !important; 
-                margin-bottom: 12px !important; 
-                padding: 12px !important;
+
+            /* Job info form inputs: underline only */
+            input:not(.table-input), textarea {
+                border: none !important;
+                border-bottom: 1px solid #bbb !important;
+                background: transparent !important;
+                padding: 1px 2px !important;
+                font-size: 9pt !important;
+                width: 100% !important;
             }
-            
-            h1 { font-size: 18pt !important; margin-bottom: 8px !important; }
-            h2 { font-size: 14pt !important; margin: 12px 0 6px !important; }
-            h3 { font-size: 12pt !important; margin: 10px 0 4px !important; }
-            
-            /* Tighten tables */
-            table { 
-                font-size: 10pt !important; 
-                margin-bottom: 8px !important;
+
+            /* Grand total section */
+            .bg-gradient-to-br {
+                background: #f0fdf4 !important;
+                border: 2px solid #10b981 !important;
+                padding: 8px 12px !important;
+                margin-top: 8px !important;
             }
-            th, td { 
-                padding: 6px 4px !important; 
-                font-size: 10pt !important;
-            }
-            
-            /* Condense input fields */
-            input, textarea { 
-                border: 1px solid #999 !important; 
-                padding: 4px 6px !important; 
-                font-size: 10pt !important;
-            }
-            
-            /* Make grand total prominent but compact */
-            .bg-gradient-to-br { 
-                background: #f8f9fa !important; 
-                color: black !important; 
-                border: 2px solid #10b981 !important; 
-                padding: 15px !important; 
-                margin-top: 15px !important;
-            }
-            
-            #selling-price { font-size: 22pt !important; }
-            #grand-total-cost { font-size: 20pt !important; }
-            
-            /* Remove unnecessary spacing */
-            .mb-12, .mb-10, .mb-8, .mb-4 { margin-bottom: 10px !important; }
-            .p-8, .p-10 { padding: 12px !important; }
+            .bg-gradient-to-br, .bg-gradient-to-br * { color: black !important; }
+            /* Collapse grid gap and hide markup slider column */
+            .bg-gradient-to-br .grid { gap: 8px !important; }
+            #grand-total-cost { font-size: 16pt !important; }
+            #selling-price    { font-size: 18pt !important; color: #059669 !important; }
+            #per-foot-price   { font-size: 9pt !important; }
+            /* Hide the markup slider row entirely — just show the % value inline */
+            .bg-gradient-to-br .flex.items-center { display: none !important; }
+
+            /* Markup % — show input value, hide slider */
+            #markup-input { display: inline-block !important; border: none !important; background: transparent !important; width: auto !important; }
         }
     `;
     document.head.appendChild(style);

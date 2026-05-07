@@ -11,7 +11,10 @@ function calculateMaterialWithMarkup() {
 
 function calculateConsumablesTotal() { return estimate.consumables.reduce((sum, row) => sum + calculateLineTotal(row), 0); }
 function calculatePaintSuppliesTotal() { return estimate.paintSupplies.reduce((sum, row) => sum + calculateLineTotal(row), 0); }
-function calculatePaintLaborTotal() { return estimate.paintLabor.reduce((sum, row) => sum + calculateLaborTotal(row), 0); }
+function calculatePaintLaborTotal() {
+    const mode = estimate.paintLaborMode || "traditional";
+    return estimate.paintLabor.reduce((sum, row) => sum + (mode === "perFoot" ? (row.pricePerFoot || 0) * (estimate.footage || 0) : calculateLaborTotal(row)), 0);
+}
 function calculateFuelTotal() { return estimate.fuel.reduce((sum, row) => sum + (row.tankFills || 0) * (row.costPerFill || 0), 0); }
 function calculateRentalTotal() { return estimate.rentalEquip.reduce((sum, row) => sum + (row.rentLength || 0) * (row.rentCost || 0), 0); }
 function calculateTripTotal() { 
@@ -20,11 +23,13 @@ function calculateTripTotal() {
 
 
 function calculateShopWithMarkup() {
-    const subtotal = estimate.shopLabor.reduce((sum, row) => sum + calculateLaborTotal(row), 0);
+    const mode = estimate.shopLaborMode || "traditional";
+    const subtotal = estimate.shopLabor.reduce((sum, row) => sum + (mode === "perFoot" ? (row.pricePerFoot || 0) * (estimate.footage || 0) : calculateLaborTotal(row)), 0);
     return subtotal * (1 + estimate.shopLaborMarkupPercent / 100);
 }
 function calculateFieldWithMarkup() {
-    const subtotal = estimate.fieldLabor.reduce((sum, row) => sum + calculateLaborTotal(row), 0);
+    const mode = estimate.fieldLaborMode || "traditional";
+    const subtotal = estimate.fieldLabor.reduce((sum, row) => sum + (mode === "perFoot" ? (row.pricePerFoot || 0) * (estimate.footage || 0) : calculateLaborTotal(row)), 0);
     return subtotal * (1 + estimate.fieldLaborMarkupPercent / 100);
 }
 

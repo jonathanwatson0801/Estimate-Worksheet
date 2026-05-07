@@ -48,20 +48,8 @@
     background-color: #f0fdf4 !important;
 }
 
-/* Hide markup scenarios when printing */
+/* Print styles — all handled in printEstimate() JS injection to avoid conflicts */
 @media print {
-    #markup-scenarios-table {
-        display: none !important;
-    }
-    
-    /* Optional: Improve print layout */
-    body {
-        background: white !important;
-    }
-    
-    .bg-gradient-to-br {
-        background: white !important;
-        color: black !important;
-        box-shadow: none !important;
-    }
+    body { background: white !important; }
+    button, input[type="range"] { display: none !important; }
 }
