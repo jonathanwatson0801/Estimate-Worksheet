@@ -249,6 +249,39 @@ body {
 }
 .delete-btn:hover { color: #b91c1c; transform: scale(1.25); }
 
+/* ==================== QTY STEPPER ==================== */
+.qty-stepper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+}
+
+.qty-btn {
+    width: 1.75rem;
+    height: 1.75rem;
+    flex-shrink: 0;
+    border-radius: 50%;
+    border: 1px solid #d1d5db;
+    background: #f9fafb;
+    color: #374151;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+    line-height: 1;
+    padding: 0;
+}
+
+.qty-btn:hover {
+    background: #059669;
+    border-color: #059669;
+    color: #fff;
+}
+
 /* ==================== CARD FOOTERS ==================== */
 .card-footer    { padding: 2rem;        border-top: 1px solid #e5e7eb; background: #f9fafb; }
 .card-footer-sm { padding: 1.5rem 2rem; border-top: 1px solid #e5e7eb; background: #f9fafb; }

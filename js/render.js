@@ -116,7 +116,13 @@ function renderConsumables() {
         const tr = document.createElement("tr");
         tr.innerHTML = `
             <td class="td-desc"><input type="text" value="${row.description || ''}" class="table-input table-input-left" onchange="updateConsumable(${index}, 'description', this.value)"></td>
-            <td class="td-center"><input type="number" value="${row.qty || 0}" min="0" step="0.01" class="table-input" onchange="updateConsumable(${index}, 'qty', parseFloat(this.value) || 0)"></td>
+            <td class="td-center">
+                <div class="qty-stepper">
+                    <button class="qty-btn" onclick="updateConsumable(${index}, 'qty', Math.max(0, (estimate.consumables[${index}].qty || 0) - 1))">-</button>
+                    <input type="number" value="${row.qty || 0}" min="0" step="1" class="table-input" style="width:3.5rem;" onchange="updateConsumable(${index}, 'qty', parseFloat(this.value) || 0)">
+                    <button class="qty-btn" onclick="updateConsumable(${index}, 'qty', (estimate.consumables[${index}].qty || 0) + 1)">+</button>
+                </div>
+            </td>
             <td class="td-center"><input type="number" value="${row.unitCost || 0}" min="0" step="0.01" class="table-input" onchange="updateConsumable(${index}, 'unitCost', parseFloat(this.value) || 0)"></td>
             <td class="td-right">${formatCurrency(total)}</td>
             <td class="td-action"><button onclick="deleteConsumableRow(${index})" class="delete-btn">×</button></td>
