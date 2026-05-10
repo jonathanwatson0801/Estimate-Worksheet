@@ -163,14 +163,20 @@ window.deleteTripRow = function(index) { estimate.tripFee.splice(index, 1); calc
 
 
 // Markup
-window.updateMarkup = function() {
+window.updateMarkup = function(source) {
     const slider = document.getElementById("markup-slider");
     const input = document.getElementById("markup-input");
-    let percent = parseFloat(slider?.value || 30);
-    if (isNaN(percent)) percent = parseFloat(input?.value || 30);
-    estimate.markupPercent = Math.max(0, Math.min(200, percent));
-    if (slider) slider.value = estimate.markupPercent;
-    if (input) input.value = estimate.markupPercent;
+    let percent;
+    if (source && source.id === "markup-input") {
+        percent = parseFloat(input?.value);
+        if (isNaN(percent)) return;
+        estimate.markupPercent = Math.max(0, Math.min(200, percent));
+        if (slider) slider.value = estimate.markupPercent;
+    } else {
+        percent = parseFloat(slider?.value ?? 30);
+        estimate.markupPercent = Math.max(0, Math.min(200, percent));
+        if (input) input.value = estimate.markupPercent;
+    }
     calculateAll();
 };
 

@@ -257,6 +257,7 @@ window.resetEstimate = function() {
     estimate.shopLabor = [];
     estimate.fieldLabor = [];
     estimate.rentalEquip = [];
+    estimate.toolExpense = [];
     estimate.tripFee = [];
 
     estimate.jobAddress = "";
@@ -286,6 +287,13 @@ window.resetEstimate = function() {
         }
     });
 
+    document.getElementById("material-markup-input").value = estimate.materialMarkupPercent;
+    document.getElementById("shop-markup-input").value = estimate.shopLaborMarkupPercent;
+    document.getElementById("field-markup-input").value = estimate.fieldLaborMarkupPercent;
+    document.getElementById("markup-input").value = estimate.markupPercent;
+    document.getElementById("markup-slider").value = estimate.markupPercent;
+
+
     // Force full re-render
     renderMaterials();
     renderConsumables();
@@ -293,6 +301,7 @@ window.resetEstimate = function() {
     renderPaintLabor();
     renderFuel();
     renderRental();
+    renderToolExpense();
     renderLabor("shop-body", estimate.shopLabor, "updateShopLabor", "deleteShopLaborRow", "shop-subtotal", "shop-markup-input", "shop-with-markup", estimate.shopLaborMarkupPercent, "shopLabor");
     renderLabor("field-body", estimate.fieldLabor, "updateFieldLabor", "deleteFieldLaborRow", "field-subtotal", "field-markup-input", "field-with-markup", estimate.fieldLaborMarkupPercent, "fieldLabor");
     renderLabor("paint-labor-body", estimate.paintLabor, "updatePaintLabor", "deletePaintLaborRow", null, null, "paint-labor-total", 0, "paintLabor");
