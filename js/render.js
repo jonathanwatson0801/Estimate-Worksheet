@@ -181,7 +181,13 @@ function renderFuel() {
         const tr = document.createElement("tr");
         tr.innerHTML = `
             <td class="td-desc"><input type="text" value="${row.description || ''}" class="table-input table-input-left" onchange="updateFuel(${index}, 'description', this.value)"></td>
-            <td class="td-center"><input type="number" value="${row.tankFills || 0}" min="0" step="0.1" class="table-input" onchange="updateFuel(${index}, 'tankFills', parseFloat(this.value) || 0)"></td>
+            <td class="td-center">
+                <div class="qty-stepper">
+                    <button class="qty-btn" onclick="updateFuel(${index}, 'tankFills', Math.max(0, (estimate.fuel[${index}].tankFills || 0) - 1))">-</button>
+                    <input type="number" value="${row.tankFills || 0}" min="0" step="1" class="table-input" style="width:3.5rem;" onchange="updateFuel(${index}, 'tankFills', parseFloat(this.value) || 0)">
+                    <button class="qty-btn" onclick="updateFuel(${index}, 'tankFills', (estimate.fuel[${index}].tankFills || 0) + 1)">+</button>
+                </div>
+            </td>
             <td class="td-center"><input type="number" value="${row.costPerFill || 0}" min="0" step="0.01" class="table-input" onchange="updateFuel(${index}, 'costPerFill', parseFloat(this.value) || 0)"></td>
             <td class="td-right">${formatCurrency(total)}</td>
             <td class="td-action"><button onclick="deleteFuelRow(${index})" class="delete-btn">×</button></td>
