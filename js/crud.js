@@ -133,6 +133,20 @@ window.addRentalRow = function() {
 window.updateRental = function(index, field, value) { estimate.rentalEquip[index][field] = value; calculateAll(); };
 window.deleteRentalRow = function(index) { estimate.rentalEquip.splice(index, 1); calculateAll(); };
 
+// Tool Expense
+window.addToolRow = function() {
+    estimate.toolExpense.push({
+        id: generateId(),
+        description: "Tool Expense",
+        quantity: 1,
+        costPer: 35
+    });
+    renderToolExpense();
+    calculateAll();
+};
+window.updateTool = function(index, field, value) { estimate.toolExpense[index][field] = value; calculateAll(); };
+window.deleteToolRow = function(index) { estimate.toolExpense.splice(index, 1); calculateAll(); };
+
 // Trip Fees
 window.addTripRow = function() {
     estimate.tripFee.push({
@@ -147,11 +161,6 @@ window.addTripRow = function() {
 window.updateTrip = function(index, field, value) { estimate.tripFee[index][field] = value; calculateAll(); };
 window.deleteTripRow = function(index) { estimate.tripFee.splice(index, 1); calculateAll(); };
 
-// Other Costs
-window.updateOtherCost = function(key, value) {
-    estimate.otherCosts[key] = value;
-    calculateAll();
-};
 
 // Markup
 window.updateMarkup = function() {

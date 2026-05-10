@@ -12,10 +12,9 @@ let estimate = {
     paintLabor: [],
     fuel: [],
     rentalEquip: [],
+    toolExpense: [],
     tripFee: [],
-    otherCosts: {
-        toolExpense: 0,
-    },
+    
     materialMarkupPercent: 15,
     materialTaxRate: 8.25,
     shopLaborMarkupPercent: 15,
@@ -29,4 +28,4 @@ let estimate = {
 };
 
 const COMMON_VENDORS = ["Amazon", "American Fence", "Builders First", "GT Lumber", "Home Depot", "Legacy Sypply", "Lowe's", "Metals4U", 
-    "McCoys", "Shope Made", "Timber Town", "Triple S Steel", "TS Distributors"];
+    "McCoys", "Shope Made", "Southwest Automated Solutions", "Timber Town", "Triple S Steel", "TS Distributors"];

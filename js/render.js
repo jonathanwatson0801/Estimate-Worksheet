@@ -145,6 +145,25 @@ function renderRental() {
     document.getElementById("rental-total").textContent = formatCurrency(calculateRentalTotal());
 }
 
+function renderToolExpense() {
+    const tbody = document.getElementById("tool-body");
+    if (!tbody) return;
+    tbody.innerHTML = "";
+    estimate.toolExpense.forEach((row, index) => {
+        const total = (row.quantity || 0) * (row.costPer || 0);
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+            <td class="td-desc"><input type="text" value="${row.description || ''}" class="table-input table-input-left" onchange="updateTool(${index}, 'description', this.value)"></td>
+            <td class="td-center"><input type="number" value="${row.quantity || 0}" min="0" step="0.1" class="table-input" onchange="updateTool(${index}, 'quantity', parseFloat(this.value) || 0)"></td>
+            <td class="td-center"><input type="number" value="${row.costPer || 0}" min="0" step="0.01" class="table-input" onchange="updateTool(${index}, 'costPer', parseFloat(this.value) || 0)"></td>
+            <td class="td-right">${formatCurrency(total)}</td>
+            <td class="td-action"><button onclick="deleteToolRow(${index})" class="delete-btn">×</button></td>
+        `;
+        tbody.appendChild(tr);
+    });
+    document.getElementById("tool-total").textContent = formatCurrency(calculateToolTotal());
+}
+
 function renderLabor(bodyId, laborArray, updateFnName, deleteFnName, subtotalId, markupInputId, withMarkupId, markupPercent, sectionKey) {
     const tbody = document.getElementById(bodyId);
     if (!tbody) return;
@@ -214,21 +233,4 @@ function updateLaborTableHeaders(sectionKey) {
         if (col2) col2.textContent = "DAYS";
         if (col3) col3.textContent = "RATE/DAY";
     }
-}
-
-function renderOtherCosts() {
-    const container = document.getElementById("other-costs");
-    const labels = { toolExpense: "Tool Expense" };
-
-    container.innerHTML = Object.keys(estimate.otherCosts).map(key => {
-        const value = estimate.otherCosts[key] || 0;
-        return `
-            <div class="cost-card">
-                <div class="cost-card-label">${labels[key] || key}</div>
-                <input type="number" value="${value}" class="cost-card-input"
-                       onchange="updateOtherCost('${key}', parseFloat(this.value) || 0)">
-                <div class="cost-card-total">${formatCurrency(value)}</div>
-            </div>
-        `;
-    }).join("");
 }

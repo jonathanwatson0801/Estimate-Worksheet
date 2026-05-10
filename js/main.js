@@ -19,11 +19,11 @@ function calculateAll() {
         () => renderPaintLabor(),
         () => renderFuel(),
         () => renderRental(),
+        () => renderToolExpense(),
         () => renderTripFee(),
         () => renderLabor("shop-body", estimate.shopLabor, "updateShopLabor", "deleteShopLaborRow", "shop-subtotal", "shop-markup-input", "shop-with-markup", estimate.shopLaborMarkupPercent, "shopLabor"),
         () => renderLabor("field-body", estimate.fieldLabor, "updateFieldLabor", "deleteFieldLaborRow", "field-subtotal", "field-markup-input", "field-with-markup", estimate.fieldLaborMarkupPercent, "fieldLabor"),
         () => renderLabor("paint-labor-body", estimate.paintLabor, "updatePaintLabor", "deletePaintLaborRow", null, null, "paint-labor-total", 0, "paintLabor"),
-        () => renderOtherCosts(),
     ];
     renders.forEach(fn => { try { fn(); } catch(e) { console.error("Render error:", e); } });
 
@@ -296,7 +296,6 @@ window.resetEstimate = function() {
     renderLabor("shop-body", estimate.shopLabor, "updateShopLabor", "deleteShopLaborRow", "shop-subtotal", "shop-markup-input", "shop-with-markup", estimate.shopLaborMarkupPercent, "shopLabor");
     renderLabor("field-body", estimate.fieldLabor, "updateFieldLabor", "deleteFieldLaborRow", "field-subtotal", "field-markup-input", "field-with-markup", estimate.fieldLaborMarkupPercent, "fieldLabor");
     renderLabor("paint-labor-body", estimate.paintLabor, "updatePaintLabor", "deletePaintLaborRow", null, null, "paint-labor-total", 0, "paintLabor");
-    renderOtherCosts();
     calculateAll();
 
     console.log("%c✅ Estimate has been completely reset", "color:#ef4444; font-weight:bold");

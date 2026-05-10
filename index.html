@@ -358,6 +358,32 @@
                 </div>
             </div>
 
+            <!-- Tool Expense -->
+            <div class="subsection">
+                <div class="section-header">
+                    <h2 class="section-title">Tool Expense</h2>
+                    <button onclick="addToolRow()" class="btn-add"><span class="plus">+</span> ADD ROW</button>
+                </div>
+                <div class="card">
+                    <table class="data-table" id="tool-table">
+                        <thead>
+                            <tr>
+                                <th class="th-desc">DESCRIPTION</th>
+                                <th class="th-center th-w28">Quantity</th>
+                                <th class="th-center th-w32">Cost</th>
+                                <th class="th-right th-w32">TOTAL</th>
+                                <th class="th-action"></th>
+                            </tr>
+                        </thead>
+                        <tbody id="tool-body"></tbody>
+                    </table>
+                    <div class="card-footer-xs">
+                        <span class="summary-label">Tool TOTAL</span>
+                        <div id="tool-total" class="summary-value-lg">$0.00</div>
+                    </div>
+                </div>
+            </div>
+
             <!-- TRIP FEES -->
             <div class="subsection">
                 <div class="section-header">
@@ -409,13 +435,6 @@
                     </div>
                 </div>
             </div>
-
-            <!-- OTHER COSTS -->
-            <div class="subsection" style="margin-bottom:3rem;">
-                <h2 class="section-title" style="margin-bottom:1rem;">OTHER COSTS</h2>
-                <div class="other-costs-grid" id="other-costs"></div>
-            </div>
-        </div>
 
         <!-- GRAND TOTAL -->
         <div class="grand-total">
