@@ -11,6 +11,9 @@ function calculateAll() {
     estimate.jobDescription = document.getElementById("job-description")?.value || "";
     estimate.footage = parseFloat(document.getElementById("footage")?.value) || 0;
 
+    // Auto Generate Date for Date Created
+    document.getElementById('date-created').value = new Date().toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric'});
+
     // Render everything — each wrapped so one failure doesn't block the grand total
     const renders = [
         () => renderMaterials(),
@@ -42,17 +45,31 @@ function calculateAll() {
 
 // ==================== SAVE / LOAD / PRINT ====================
 
-window.saveEstimate = function() {
+// Save Estimate [File Browser]
+window.saveEstimate = async function() {
     const dataStr = JSON.stringify(estimate, null, 2);
-    const dataUri = 'data:application/json;charset=utf-8,' + encodeURIComponent(dataStr);
-    
-    const exportFileDefaultName = `Estimate_${new Date().toISOString().slice(0,10)}.json`;
-    
-    const linkElement = document.createElement('a');
-    linkElement.setAttribute('href', dataUri);
-    linkElement.setAttribute('download', exportFileDefaultName);
-    linkElement.click();
+    const exportFileDefaultName = 'Estimate_${new Date().toISOString().slice(0,10)}.json';
 
+
+    if (window.showSaveFilePicker) {
+        const fileHandle = await window.showSaveFilePicker({
+            suggestedName: exportFileDefaultName,
+            types: [{
+                description: 'JSON File',
+                accept: { 'application/json': ['.json']},
+            }],
+        });
+
+    const writable = await fileHandle.createWritable();
+    await writable.write(dataStr);
+    await writable.close();
+    } else {
+        const dataUri = 'data:application/json;charset=utf-8,' + encodeURIComponent(dataStr);
+        const linkElement = document.createElement('a');
+        linkElement.setAttribute('href', dataUri);
+        linkElement.setAttribute('download', exportFileDefaultName);
+        linkElement.click();
+    }
     console.log("%c✅ Estimate saved as JSON", "color:#10b981");
 };
 
