@@ -105,13 +105,13 @@ window.updateMaterialMarkup = function() { estimate.materialMarkupPercent = pars
 window.updateShopMarkup = function() { estimate.shopLaborMarkupPercent = parseFloat(document.getElementById("shop-markup-input").value) || 0; calculateAll(); };
 window.updateFieldMarkup = function() { estimate.fieldLaborMarkupPercent = parseFloat(document.getElementById("field-markup-input").value) || 0; calculateAll(); };
 
-window.handleStockSelect = function(index, value) {
-    const [description, unitPrice] = value.split('|');
-    estimate.materials[index].description = description;
-    estimate.materials[index].unitCost = parseFloat(unitPrice);
+window.handleStockSelect = function(rowIndex, catalogIndex) {
+    const item = STOCK_CATALOG[catalogIndex];
+    estimate.materials[rowIndex].description = `${item.material} – ${item.dimensions}`;
+    estimate.materials[rowIndex].unitCost = item.unitPrice;
+    estimate.materials[rowIndex].catalogIndex = parseInt(catalogIndex);
     calculateAll();
 };
-
 // Consumables
 window.addConsumableRow = function() { estimate.consumables.push({ id: generateId(), description: "", qty: 0, unitCost: 0 }); renderConsumables(); calculateAll(); };
 window.updateConsumable = function(index, field, value) { estimate.consumables[index][field] = value; calculateAll(); };

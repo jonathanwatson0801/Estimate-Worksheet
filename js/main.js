@@ -48,7 +48,9 @@ function calculateAll() {
 // Save Estimate [File Browser]
 window.saveEstimate = async function() {
     const dataStr = JSON.stringify(estimate, null, 2);
-    const exportFileDefaultName = 'Estimate_${new Date().toISOString().slice(0,10)}.json';
+    const customerName = estimate.customerName ? `_${estimate.customerName.replace(/\s+/g, '_')}` : '';
+    const exportFileDefaultName = `Estimate${customerName}_${new Date().toISOString().slice(0,10)}.json`;
+
 
 
     if (window.showSaveFilePicker) {
@@ -261,11 +263,43 @@ function formatPhoneNumber(input) {
 
 // ==================== Reset Estimate ====================
 window.resetEstimate = function() {
-    if (!confirm("Are you sure you want to reset the entire estimate?\n\nAll data will be lost.")) {
-        return;
-    }
+    const modal = document.getElementById('reset-modal');
+    modal.style.display = 'flex';
+};
 
-    // Clear all data
+window.closeResetModal = function() {
+    document.getElementById('reset-modal').style.display = 'none';
+};
+
+window.resetKeepCustomer = function() {
+    closeResetModal();
+
+    // Save customer info
+    const name    = estimate.customerName;
+    const company = estimate.customerCompany;
+    const phone   = estimate.customerPhone;
+    const email   = estimate.customerEmail;
+
+    performReset();
+
+    // Restore customer info
+    estimate.customerName    = name;
+    estimate.customerCompany = company;
+    estimate.customerPhone   = phone;
+    estimate.customerEmail   = email;
+
+    document.getElementById('customer-name').value    = name;
+    document.getElementById('customer-company').value = company;
+    document.getElementById('customer-phone').value   = phone;
+    document.getElementById('customer-email').value   = email;
+};
+
+window.resetEverything = function() {
+    closeResetModal();
+    performReset();
+};
+
+function performReset() {
     estimate.materials = [];
     estimate.consumables = [];
     estimate.paintSupplies = [];
@@ -281,19 +315,16 @@ window.resetEstimate = function() {
     estimate.jobDescription = "";
     estimate.footage = 0;
 
-    // Customer fields
     estimate.customerName = "";
     estimate.customerCompany = "";
     estimate.customerPhone = "";
     estimate.customerEmail = "";
 
-    // Reset markups
     estimate.materialMarkupPercent = 15;
     estimate.shopLaborMarkupPercent = 15;
     estimate.fieldLaborMarkupPercent = 15;
     estimate.markupPercent = 30;
 
-    // Clear all form inputs
     document.querySelectorAll('input, textarea').forEach(input => {
         if (input.type === "number") {
             input.value = (input.id === "footage") ? "0" : "";
@@ -310,8 +341,6 @@ window.resetEstimate = function() {
     document.getElementById("markup-input").value = estimate.markupPercent;
     document.getElementById("markup-slider").value = estimate.markupPercent;
 
-
-    // Force full re-render
     renderMaterials();
     renderConsumables();
     renderPaintSupplies();
@@ -324,5 +353,5 @@ window.resetEstimate = function() {
     renderLabor("paint-labor-body", estimate.paintLabor, "updatePaintLabor", "deletePaintLaborRow", null, null, "paint-labor-total", 0, "paintLabor");
     calculateAll();
 
-    console.log("%c✅ Estimate has been completely reset", "color:#ef4444; font-weight:bold");
-};
+    console.log("%c✅ Estimate has been reset", "color:#ef4444; font-weight:bold");
+}

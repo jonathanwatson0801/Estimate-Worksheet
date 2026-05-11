@@ -12,9 +12,8 @@ function renderMaterials() {
                 ${row.isStock
                     ? `<select class="table-input table-input-left" onchange="handleStockSelect(${index}, this.value)">
                         <option value="">Select material...</option>
-                        ${STOCK_CATALOG.map(item =>
-                            `<option value="${item.material}|${item.unitPrice}" ${row.description === item.material ? 'selected' : ''}>
-                                ${item.material} – ${item.dimensions} (${item.unit})
+                        ${STOCK_CATALOG.map((item, idx) =>
+                        `<option value="${idx}" ${row.catalogIndex === idx ? 'selected' : ''}>                                ${item.material} – ${item.dimensions} (${item.unit})
                             </option>`
                         ).join('')}
                     </select>`
@@ -33,6 +32,11 @@ function renderMaterials() {
             <td class="td-action"><button onclick="deleteMaterialRow(${index})" class="delete-btn">×</button></td>
         `;
         tbody.appendChild(tr);
+
+        if (row.isStock && row.description) {
+            const sel = tr.querySelector('select.table-input');
+            if (sel && row.catalogIndex !== undefined) sel.value = row.catalogIndex;
+        }
     });
 
     const subtotal = calculateMaterialSubtotal();
