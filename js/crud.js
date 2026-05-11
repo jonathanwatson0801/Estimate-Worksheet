@@ -97,9 +97,20 @@ window.addMaterialRow = function() {
     estimate.materials.push({ id: generateId(), description: "", vendor: "", qty: 0, unitCost: 0 });
     renderMaterials(); calculateAll();
 };
+window.addStockRow = function() {
+    estimate.materials.push({ id: generateId(), description: "", vendor: "", qty: 0, unitCost: 0, isStock: true });
+    renderMaterials(); calculateAll();
+};
 window.updateMaterialMarkup = function() { estimate.materialMarkupPercent = parseFloat(document.getElementById("material-markup-input").value) || 0; calculateAll(); };
 window.updateShopMarkup = function() { estimate.shopLaborMarkupPercent = parseFloat(document.getElementById("shop-markup-input").value) || 0; calculateAll(); };
 window.updateFieldMarkup = function() { estimate.fieldLaborMarkupPercent = parseFloat(document.getElementById("field-markup-input").value) || 0; calculateAll(); };
+
+window.handleStockSelect = function(index, value) {
+    const [description, unitPrice] = value.split('|');
+    estimate.materials[index].description = description;
+    estimate.materials[index].unitCost = parseFloat(unitPrice);
+    calculateAll();
+};
 
 // Consumables
 window.addConsumableRow = function() { estimate.consumables.push({ id: generateId(), description: "", qty: 0, unitCost: 0 }); renderConsumables(); calculateAll(); };
