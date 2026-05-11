@@ -2,6 +2,17 @@
 
 const STOCK_CATALOG = [
 
+    // Angle Iron
+    {material: "Angle Iron", dimensions: "1-1/2x1-1/2x1/8 @ 20'", unit: "Each", unitPrice: 62.90},
+    {material: "Angle Iron", dimensions: "2x1-1/2x1/8 @ 20'", unit: "Each", unitPrice: 72.90},
+    {material: "Angle Iron", dimensions: "2x2x1/4 @ 20'", unit: "Each", unitPrice: 66.90},
+    {material: "Angle Iron", dimensions: "2x2x1/8 @ 20'", unit: "Each", unitPrice: 69.57},
+    {material: "Angle Iron", dimensions: "3x2x3/16 @ 20'", unit: "Each", unitPrice: 70.90},
+
+
+
+
+
     // Rectangle Tubing
         // 2x1
     {material: "Rectangle Tube", dimensions: "2x1x11ga @ 20'", unit: "Each", unitPrice: 40.00},
@@ -13,10 +24,6 @@ const STOCK_CATALOG = [
     {material: "Rectangle Tube", dimensions: "3x1x11ga @ 24'", unit: "Each", unitPrice: 78.00},
     {material: "Rectangle Tube", dimensions: "3x1x14ga @ 20'", unit: "Each", unitPrice: 35.00},
     {material: "Rectangle Tube", dimensions: "3x1x14ga @ 24'", unit: "Each", unitPrice: 42.00},
-
-
-
-
 
     // Square Tubing
         // 1/2x1/2 
