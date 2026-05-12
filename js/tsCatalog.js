@@ -24,6 +24,7 @@ const TS_CATALOG = [
     {material: "HA41", dimensions: "Steel V Groove Wheel 6in", unit: "Each", unitPrice: 55.00},
     {material: "HA9M3", dimensions: "LokkLatch Gravity - Series 2", unit: "Each", unitPrice: 29.19},
     {material: "HA9M4", dimensions: "LokkLatch Gravity - Series 2 W/ Access Kit", unit: "Each", unitPrice: 48.85},
+    {material: "HAGH12320", dimensions: "Extra Heavy Duty Cane Bolt", unit: "Each", unitPrice: 21.49},
     {material: "HITCA1", dimensions: "Tru-Close Adjustable, Self-Closing Gate Hinges - 2-1/2", unit: "Pair", unitPrice: 33.40},
     {material: "HITCA1L2", dimensions: "Tru-Close Adjustable, Self-Closing Gate Hinges - 2-1/2 W/ Legs", unit: "Pair", unitPrice: 34.45},
     {material: "HIT1", dimensions: "Tru-Close Heavy Duty Adjustable Hinge - 3-1/2", unit: "Pair", unitPrice: 55.47},
