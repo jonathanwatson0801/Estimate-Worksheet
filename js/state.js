@@ -21,10 +21,7 @@ let estimate = {
     fieldLaborMarkupPercent: 15,
     markupPercent: 30,
 
-    // Labor Mode Toggles
-    shopLaborMode: "traditional",      // "traditional" or "perFoot"
-    fieldLaborMode: "traditional",
-    paintLaborMode: "traditional"
+
 };
 
 const COMMON_VENDORS = ["Amazon", "American Fence", "Binford", "Builders First", "GT Lumber", "Home Depot", "Legacy Supply", "Lowe's", "Metals4U", 
