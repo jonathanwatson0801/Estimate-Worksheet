@@ -27,5 +27,5 @@ let estimate = {
     paintLaborMode: "traditional"
 };
 
-const COMMON_VENDORS = ["Amazon", "American Fence", "Builders First", "GT Lumber", "Home Depot", "Legacy Supply", "Lowe's", "Metals4U", 
-    "McCoys", "Montopolis", "Shope Made", "Southwest Automated Solutions", "Timber Town", "Triple S Steel", "TS Distributors"];
+const COMMON_VENDORS = ["Amazon", "American Fence", "Binford", "Builders First", "GT Lumber", "Home Depot", "Legacy Supply", "Lowe's", "Metals4U", 
+    "McCoys", "Montopolis", "Shope Made", "Southwest Automated Solutions", "Timber Town", "Triple S Steel", "TS Distributors", "Viking Fence", "Other"];
