@@ -71,7 +71,13 @@
                 <!-- Footage -->
                 <div class="form-col-2">
                     <label class="field-label-md">FOOTAGE (ft)</label>
-                    <input type="number" id="footage" class="footage-input" value="0" oninput="calculateAll()">
+                    <div class="footage-wrapper">
+                        <div class="footage-spinner">
+                            <button class="footage-btn" onclick="adjustFootage(1)">▲</button>
+                            <button class="footage-btn" onclick="adjustFootage(-1)">▼</button>
+                        </div>
+                        <input type="number" id="footage" class="footage-input" value="0" oninput="calculateAll()">
+                    </div>
                     <p class="footage-unit">linear feet</p>
                 </div>
 

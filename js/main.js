@@ -43,6 +43,12 @@ function calculateAll() {
     renderMarkupScenarios();
 }
 
+function adjustFootage(delta) {
+    const input = document.getElementById('footage');
+    input.value = Math.max(0, (parseFloat(input.value) || 0) + delta);
+    calculateAll();
+}
+
 // ==================== SAVE / LOAD / PRINT ====================
 
 // Save Estimate [File Browser]
