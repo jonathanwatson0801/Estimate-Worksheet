@@ -94,8 +94,8 @@ body {
     margin-bottom: 0.75rem;
 }
 
-.section-title { font-size: 1.5rem; font-weight: 600; }
-.section-subtitle { font-size: 1.25rem; font-weight: 600; }
+.section-title { font-size: 1.5rem; font-weight: 600; padding-left: 15px;}
+.section-subtitle { font-size: 1.25rem; font-weight: 600; padding-left: 15px;}
 
 /* ==================== CARDS ==================== */
 .card {
