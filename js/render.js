@@ -65,41 +65,48 @@ function renderLabor(bodyId, laborArray, updateFnName, deleteFnName, subtotalId,
 
     const mode = estimate[sectionKey + "Mode"] || "traditional";
 
-    laborArray.forEach((row, index) => {
-        let total = 0;
-        if (mode === "perFoot") {
-            total = (row.pricePerFoot || 0) * (estimate.footage || 0);
-        } else {
-            total = calculateLaborTotal(row);
-        }
+laborArray.forEach((row, index) => {
+    const rowMode = row.mode || "traditional";
+    const total = rowMode === "perFoot"
+        ? (row.pricePerFoot || 0) * (estimate.footage || 0)
+        : calculateLaborTotal(row);
 
-        const tr = document.createElement("tr");
+    const tr = document.createElement("tr");
 
-        if (mode === "perFoot") {
-            tr.innerHTML = `
-                <td class="td-desc"><input type="text" value="${row.description || ''}" class="table-input table-input-left" onchange="${updateFnName}(${index}, 'description', this.value)"></td>
-                <td class="td-muted">—</td>
-                <td class="td-muted">—</td>
-                <td class="td-center"><input type="number" value="${row.pricePerFoot || 0}" min="0" step="0.01" class="table-input" onchange="${updateFnName}(${index}, 'pricePerFoot', parseFloat(this.value) || 0)"></td>
-                <td class="td-right">${formatCurrency(total)}</td>
-                <td class="td-action"><button onclick="${deleteFnName}(${index})" class="delete-btn">×</button></td>
-            `;
-        } else {
-            tr.innerHTML = `
-                <td class="td-desc"><input type="text" value="${row.description || ''}" class="table-input table-input-left" onchange="${updateFnName}(${index}, 'description', this.value)"></td>
-                <td class="td-center"><input type="number" value="${row.guys || 0}" min="0" class="table-input" onchange="${updateFnName}(${index}, 'guys', parseFloat(this.value) || 0)"></td>
-                <td class="td-center"><input type="number" value="${row.days || 0}" min="0" class="table-input" onchange="${updateFnName}(${index}, 'days', parseFloat(this.value) || 0)"></td>
-                <td class="td-center"><input type="number" value="${row.rate || 360}" min="0" class="table-input" onchange="${updateFnName}(${index}, 'rate', parseFloat(this.value) || 0)"></td>
-                <td class="td-right">${formatCurrency(total)}</td>
-                <td class="td-action"><button onclick="${deleteFnName}(${index})" class="delete-btn">×</button></td>
-            `;
-        }
-        tbody.appendChild(tr);
-    });
+    if (rowMode === "perFoot") {
+        tr.innerHTML = `
+            <td class="td-desc"><input type="text" value="${row.description || ''}" class="table-input table-input-left" onchange="${updateFnName}(${index}, 'description', this.value)"></td>
+            <td class="td-muted">—</td>
+            <td class="td-muted">—</td>
+            <td class="td-center"><input type="number" value="${row.pricePerFoot || 0}" min="0" step="0.01" class="table-input" onchange="${updateFnName}(${index}, 'pricePerFoot', parseFloat(this.value) || 0)"></td>
+            <td class="td-right">${formatCurrency(total)}</td>
+            <td class="td-action">
+                <button onclick="toggleRowLaborMode('${sectionKey}', ${index})" class="btn-mode-toggle">$/FT</button>
+                <button onclick="${deleteFnName}(${index})" class="delete-btn">×</button>
+            </td>
+        `;
+    } else {
+        tr.innerHTML = `
+            <td class="td-desc"><input type="text" value="${row.description || ''}" class="table-input table-input-left" onchange="${updateFnName}(${index}, 'description', this.value)"></td>
+            <td class="td-center"><input type="number" value="${row.guys || 1}" min="0" class="table-input" onchange="${updateFnName}(${index}, 'guys', parseFloat(this.value) || 0)"></td>
+            <td class="td-center"><input type="number" value="${row.days || 1}" min="0" class="table-input" onchange="${updateFnName}(${index}, 'days', parseFloat(this.value) || 0)"></td>
+            <td class="td-center"><input type="number" value="${row.rate || 360}" min="0" class="table-input" onchange="${updateFnName}(${index}, 'rate', parseFloat(this.value) || 0)"></td>
+            <td class="td-right">${formatCurrency(total)}</td>
+            <td class="td-action">
+                <button onclick="toggleRowLaborMode('${sectionKey}', ${index})" class="btn-mode-toggle">G×D</button>
+                <button onclick="${deleteFnName}(${index})" class="delete-btn">×</button>
+            </td>
+        `;
+    }
+    tbody.appendChild(tr);
+});
 
-    const subtotal = laborArray.reduce((sum, row) => {
-        return sum + (mode === "perFoot" ? (row.pricePerFoot || 0) * (estimate.footage || 0) : calculateLaborTotal(row));
-    }, 0);
+const subtotal = laborArray.reduce((sum, row) => {
+    const rowMode = row.mode || "traditional";
+    return sum + (rowMode === "perFoot"
+        ? (row.pricePerFoot || 0) * (estimate.footage || 0)
+        : calculateLaborTotal(row));
+}, 0);
 
     if (subtotalId) document.getElementById(subtotalId).textContent = formatCurrency(subtotal);
     if (withMarkupId) {
@@ -111,22 +118,13 @@ function renderLabor(bodyId, laborArray, updateFnName, deleteFnName, subtotalId,
 }
 
 function updateLaborTableHeaders(sectionKey) {
-    const mode   = estimate[sectionKey + "Mode"] || "traditional";
     const prefix = sectionKey === "paintLabor" ? "paint-labor" : sectionKey === "shopLabor" ? "shop-labor" : "field-labor";
-
     const col1 = document.getElementById(prefix + "-col1");
     const col2 = document.getElementById(prefix + "-col2");
     const col3 = document.getElementById(prefix + "-col3");
-
-    if (mode === "perFoot") {
-        if (col1) col1.textContent = "—";
-        if (col2) col2.textContent = "—";
-        if (col3) col3.textContent = "PRICE / FT";
-    } else {
-        if (col1) col1.textContent = "GUYS";
-        if (col2) col2.textContent = "DAYS";
-        if (col3) col3.textContent = "RATE/DAY";
-    }
+    if (col1) col1.textContent = "GUYS";
+    if (col2) col2.textContent = "DAYS";
+    if (col3) col3.textContent = "RATE / $/FT";
 }
 
 // Consumables

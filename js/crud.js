@@ -1,9 +1,9 @@
 // ==================== CRUD ====================
 
 // Toggle between Traditional and Per Foot mode
-function toggleLaborMode(section) {
-    const modeKey = section + "Mode";
-    estimate[modeKey] = estimate[modeKey] === "traditional" ? "perFoot" : "traditional";
+function toggleRowLaborMode(section, index) {
+    const row = estimate[section][index];
+    row.mode = row.mode === "traditional" ? "perFoot" : "traditional";
     calculateAll();
 }
 
@@ -68,10 +68,16 @@ window.deleteFieldLaborRow = function(index) {
     estimate.fieldLabor.splice(index, 1);
     calculateAll();
 };
-window.addShopLaborRow = function() { estimate.shopLabor.push({ id: generateId(), description: "", guys: 1, days: 1, rate: 360 }); calculateAll(); };
+window.addShopLaborRow = function() { 
+    estimate.shopLabor.push({ id: generateId(), description: "", guys: 1, days: 1, rate: 360, pricePerFoot: 0, mode: "traditional" }); 
+    calculateAll(); 
+};
 window.updateShopLabor = function(index, field, value) { estimate.shopLabor[index][field] = value; calculateAll(); };
 window.deleteShopLaborRow = function(index) { estimate.shopLabor.splice(index, 1); calculateAll(); };
-window.addFieldLaborRow = function() { estimate.fieldLabor.push({ id: generateId(), description: "", guys: 1, days: 1, rate: 360 }); calculateAll(); };
+window.addFieldLaborRow = function() { 
+    estimate.fieldLabor.push({ id: generateId(), description: "", guys: 1, days: 1, rate: 360, pricePerFoot: 0, mode: "traditional" }); 
+    calculateAll(); 
+};
 window.updateFieldLabor = function(index, field, value) { estimate.fieldLabor[index][field] = value; calculateAll(); };
 window.deleteFieldLaborRow = function(index) { estimate.fieldLabor.splice(index, 1); calculateAll(); };
 
@@ -84,7 +90,10 @@ window.deletePaintLaborRow = function(index) {
     estimate.paintLabor.splice(index, 1);
     calculateAll();
 };
-window.addPaintLaborRow = function() { estimate.paintLabor.push({ id: generateId(), description: "", guys: 1, days: 1, rate: 360 }); renderPaintLabor(); calculateAll(); };
+window.addPaintLaborRow = function() { 
+    estimate.paintLabor.push({ id: generateId(), description: "", guys: 1, days: 1, rate: 360, pricePerFoot: 0, mode: "traditional" }); 
+    renderPaintLabor(); calculateAll(); 
+};
 window.updatePaintLabor = function(index, field, value) { estimate.paintLabor[index][field] = value; calculateAll(); };
 window.deletePaintLaborRow = function(index) { estimate.paintLabor.splice(index, 1); calculateAll(); };
 
@@ -99,12 +108,12 @@ window.addMaterialRow = function() {
 };
 
 window.addStockRow = function() {
-    estimate.materials.push({ id: generateId(), description: "", vendor: "", qty: 0, unitCost: 0, isStock: true });
+    estimate.materials.push({ id: generateId(), description: "", vendor: "Triple S Steel", qty: 0, unitCost: 0, isStock: true });
     renderMaterials(); calculateAll();
 };
 
 window.addTSRow = function() {
-    estimate.materials.push({id: generateId(), description:"", vendor: "", qty: 0, unitCost: 0, isTS: true });
+    estimate.materials.push({id: generateId(), description:"", vendor: "TS Distributors", qty: 0, unitCost: 0, isTS: true });
     renderMaterials(); calculateAll();
 };
 
