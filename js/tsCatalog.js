@@ -20,6 +20,7 @@ const TS_CATALOG = [
     {material: "FW64874", dimensions: "CONTEMPO BLACK 48 X 98.4 PANEL", unit: "Each", unitPrice: 143.33},
     {material: "GANV3", dimensions: "FLAT MOUNT RESIDENTIAL BRACKET", unit: "Each", unitPrice: 1.75},
     {material: "GANVC3", dimensions: "FLAT MOUNT COMMERCIAL BRACKET", unit: "Each", unitPrice: 2.00},
+    {material: "HA109", dimensions: "Dumpster Gate Latch", unit: "Each", unitPrice: 24.49},
     {material: "HA40", dimensions: "Steel V Groove Wheel 4in", unit: "Each", unitPrice: 37.50},
     {material: "HA41", dimensions: "Steel V Groove Wheel 6in", unit: "Each", unitPrice: 55.00},
     {material: "HA9M3", dimensions: "LokkLatch Gravity - Series 2", unit: "Each", unitPrice: 29.19},
