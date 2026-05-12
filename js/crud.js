@@ -97,10 +97,17 @@ window.addMaterialRow = function() {
     estimate.materials.push({ id: generateId(), description: "", vendor: "", qty: 0, unitCost: 0 });
     renderMaterials(); calculateAll();
 };
+
 window.addStockRow = function() {
     estimate.materials.push({ id: generateId(), description: "", vendor: "", qty: 0, unitCost: 0, isStock: true });
     renderMaterials(); calculateAll();
 };
+
+window.addTSRow = function() {
+    estimate.materials.push({id: generateId(), description:"", vendor: "", qty: 0, unitCost: 0, isTS: true });
+    renderMaterials(); calculateAll();
+};
+
 window.updateMaterialMarkup = function() { estimate.materialMarkupPercent = parseFloat(document.getElementById("material-markup-input").value) || 0; calculateAll(); };
 window.updateShopMarkup = function() { estimate.shopLaborMarkupPercent = parseFloat(document.getElementById("shop-markup-input").value) || 0; calculateAll(); };
 window.updateFieldMarkup = function() { estimate.fieldLaborMarkupPercent = parseFloat(document.getElementById("field-markup-input").value) || 0; calculateAll(); };
@@ -112,6 +119,15 @@ window.handleStockSelect = function(rowIndex, catalogIndex) {
     estimate.materials[rowIndex].catalogIndex = parseInt(catalogIndex);
     calculateAll();
 };
+
+window.handleTSSelect = function(rowIndex, catalogIndex) {
+    const item = TS_CATALOG[catalogIndex];
+    estimate.materials[rowIndex].description = '${item.material} - ${item.dimensions}';
+    estimate.materials[rowIndex].unitCost = item.unitPrice;
+    estimate.materials[rowIndex].catalogIndex = parseInt(catalogIndex);
+    calculateAll();
+}
+
 // Consumables
 window.addConsumableRow = function() { estimate.consumables.push({ id: generateId(), description: "", qty: 0, unitCost: 0 }); renderConsumables(); calculateAll(); };
 window.updateConsumable = function(index, field, value) { estimate.consumables[index][field] = value; calculateAll(); };

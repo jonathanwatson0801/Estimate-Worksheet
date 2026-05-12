@@ -13,8 +13,14 @@ function renderMaterials() {
                     ? `<select class="table-input table-input-left" onchange="handleStockSelect(${index}, this.value)">
                         <option value="">Select material...</option>
                         ${STOCK_CATALOG.map((item, idx) =>
-                        `<option value="${idx}" ${row.catalogIndex === idx ? 'selected' : ''}>                                ${item.material} – ${item.dimensions} (${item.unit})
-                            </option>`
+                            `<option value="${idx}">${item.material} – ${item.dimensions} (${item.unit})</option>`
+                        ).join('')}
+                    </select>`
+                    : row.isTS
+                    ? `<select class="table-input table-input-left" onchange="handleTSSelect(${index}, this.value)">
+                        <option value="">Select material...</option>
+                        ${TS_CATALOG.map((item, idx) =>
+                            `<option value="${idx}">${item.material} – ${item.dimensions} (${item.unit})</option>`
                         ).join('')}
                     </select>`
                     : `<input type="text" value="${row.description || ''}" class="table-input table-input-left" onchange="updateMaterial(${index}, 'description', this.value)">`
@@ -33,9 +39,9 @@ function renderMaterials() {
         `;
         tbody.appendChild(tr);
 
-        if (row.isStock && row.description) {
+        if ((row.isStock || row.isTS) && row.catalogIndex !== undefined) {
             const sel = tr.querySelector('select.table-input');
-            if (sel && row.catalogIndex !== undefined) sel.value = row.catalogIndex;
+            if (sel) sel.value = row.catalogIndex;
         }
     });
 
