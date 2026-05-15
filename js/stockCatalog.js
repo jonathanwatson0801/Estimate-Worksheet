@@ -5,8 +5,8 @@ const STOCK_CATALOG = [
     // Angle Iron
     {material: "Angle Iron", dimensions: "1-1/2x1-1/2x1/8 @ 20'", unit: "Each", unitPrice: 62.90},
     {material: "Angle Iron", dimensions: "2x1-1/2x1/8 @ 20'", unit: "Each", unitPrice: 72.90},
-    {material: "Angle Iron", dimensions: "2x2x1/4 @ 20'", unit: "Each", unitPrice: 66.90},
-    {material: "Angle Iron", dimensions: "2x2x1/8 @ 20'", unit: "Each", unitPrice: 69.57},
+    {material: "Angle Iron", dimensions: "2x2x1/4 @ 20'", unit: "Each", unitPrice: 45.24},
+    {material: "Angle Iron", dimensions: "2x2x1/8 @ 20'", unit: "Each", unitPrice: 23.40},
     {material: "Angle Iron", dimensions: "3x2x3/16 @ 20'", unit: "Each", unitPrice: 70.90},
 
 
@@ -15,10 +15,10 @@ const STOCK_CATALOG = [
 
     // Rectangle Tubing
         // 2x1
-    {material: "Rectangle Tube", dimensions: "2x1x11ga @ 20'", unit: "Each", unitPrice: 40.00},
-    {material: "Rectangle Tube", dimensions: "2x1x11ga @ 24'", unit: "Each", unitPrice: 48.00},
-    {material: "Rectangle Tube", dimensions: "2x1x14ga @ 20'", unit: "Each", unitPrice: 28.69},
-    {material: "Rectangle Tube", dimensions: "2x1x14ga @ 24'", unit: "Each", unitPrice: 34.43},
+    {material: "Rectangle Tube", dimensions: "2x1x11ga @ 20'", unit: "Each", unitPrice: 49.00},
+    {material: "Rectangle Tube", dimensions: "2x1x11ga @ 24'", unit: "Each", unitPrice: 58.80},
+    {material: "Rectangle Tube", dimensions: "2x1x14ga @ 20'", unit: "Each", unitPrice: 35.00},
+    {material: "Rectangle Tube", dimensions: "2x1x14ga @ 24'", unit: "Each", unitPrice: 42.00},
         // 3x1
     {material: "Rectangle Tube", dimensions: "3x1x11ga @ 20'", unit: "Each", unitPrice: 65.00},
     {material: "Rectangle Tube", dimensions: "3x1x11ga @ 24'", unit: "Each", unitPrice: 78.00},
@@ -51,10 +51,10 @@ const STOCK_CATALOG = [
         // 2x2
     {material: "Square Tube", dimensions: "2x2x3/16 @ 20'", unit: "Each", unitPrice: 66.00},
     {material: "Square Tube", dimensions: "2x2x3/16 @ 20'", unit: "Each", unitPrice: 79.20},
-    {material: "Square Tube", dimensions: "2x2x11ga @ 20'", unit: "Each", unitPrice: 49.56},
-    {material: "Square Tube", dimensions: "2x2x11ga @ 24'", unit: "Each", unitPrice: 59.47},
-    {material: "Square Tube", dimensions: "2x2x14ga @ 20'", unit: "Each", unitPrice: 36.80},
-    {material: "Square Tube", dimensions: "2x2x14ga @ 24'", unit: "Each", unitPrice: 44.16},
+    {material: "Square Tube", dimensions: "2x2x11ga @ 20'", unit: "Each", unitPrice: 64.00},
+    {material: "Square Tube", dimensions: "2x2x11ga @ 24'", unit: "Each", unitPrice: 76.80},
+    {material: "Square Tube", dimensions: "2x2x14ga @ 20'", unit: "Each", unitPrice: 47.00},
+    {material: "Square Tube", dimensions: "2x2x14ga @ 24'", unit: "Each", unitPrice: 56.40},
         // 3x3
     {material: "Square Tube", dimensions: "3x3x1/4 @ 20'", unit: "Each", unitPrice: 149.00},
     {material: "Square Tube", dimensions: "3x3x1/4 @ 24'", unit: "Each", unitPrice: 178.80},
@@ -68,10 +68,10 @@ const STOCK_CATALOG = [
     {material: "Square Tube", dimensions: "3-1/2x3-1/2x1/4 @ 20'", unit: "Each", unitPrice: 137.00},
     {material: "Square Tube", dimensions: "3-1/2x3-1/2x1/4 @ 24'", unit: "Each", unitPrice: 164.40},
         // 4x4
-    {material: "Square Tube", dimensions: "4x4x1/4 @ 20'", unit: "Each", unitPrice: 174.50},
-    {material: "Square Tube", dimensions: "4x4x1/4 @ 24'", unit: "Each", unitPrice: 209.40},
-    {material: "Square Tube", dimensions: "4x4x3/16 @ 20'", unit: "Each", unitPrice: 151.00},
-    {material: "Square Tube", dimensions: "4x4x3/16 @ 24'", unit: "Each", unitPrice: 181.20},
+    {material: "Square Tube", dimensions: "4x4x1/4 @ 20'", unit: "Each", unitPrice: 254.00},
+    {material: "Square Tube", dimensions: "4x4x1/4 @ 24'", unit: "Each", unitPrice: 304.80},
+    {material: "Square Tube", dimensions: "4x4x3/16 @ 20'", unit: "Each", unitPrice: 195.00},
+    {material: "Square Tube", dimensions: "4x4x3/16 @ 24'", unit: "Each", unitPrice: 234.00},
     {material: "Square Tube", dimensions: "4x4x11ga @ 20'", unit: "Each", unitPrice: 97.00},
     {material: "Square Tube", dimensions: "4x4x11ga @ 24'", unit: "Each", unitPrice: 116.40},
     {material: "Square Tube", dimensions: "4x4x14ga @ 20'", unit: "Each", unitPrice: 79.00},
